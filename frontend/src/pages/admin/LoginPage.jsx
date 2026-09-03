@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../../hooks/usePageTitle.js';
+import { useRobotsMeta } from '../../hooks/useRobotsMeta.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { ApiError } from '../../lib/apiClient.js';
 import { Logo } from '../../components/shared/Logo.jsx';
@@ -8,6 +9,7 @@ import './LoginPage.css';
 
 export default function LoginPage() {
   usePageTitle('Admin Login');
+  useRobotsMeta('noindex, nofollow');
   const { status, login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();

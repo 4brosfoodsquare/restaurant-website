@@ -21,6 +21,15 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Admin dashboard must never be indexed by search engines. This header
+# applies regardless of JavaScript execution (the SPA also sets a
+# <meta name="robots"> tag client-side via useRobotsMeta as a defense-in-depth
+# fallback for crawlers/previews that skip it) — see frontend/src/hooks/useRobotsMeta.js.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # The API is a separate, long-running Node/Express process — Netlify only
 # serves this static build. Set VITE_API_URL (in the Netlify UI, or here as
 # a per-context override) to the deployed backend's URL so the frontend
