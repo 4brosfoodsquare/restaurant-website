@@ -10,6 +10,7 @@ import { publicCategoriesRouter, adminCategoriesRouter } from './modules/categor
 import { publicMenuRouter, adminMenuRouter } from './modules/menu/menu.routes.js';
 import { publicOrdersRouter, adminOrdersRouter } from './modules/orders/orders.routes.js';
 import { publicSettingsRouter, adminSettingsRouter } from './modules/settings/settings.routes.js';
+import { adminUploadsRouter } from './modules/uploads/uploads.routes.js';
 
 export function createApp() {
   const app = express();
@@ -47,6 +48,7 @@ export function createApp() {
   app.use('/api/admin/orders', adminOrdersRouter);
   app.use('/api/settings', publicSettingsRouter);
   app.use('/api/admin/settings', adminSettingsRouter);
+  app.use('/api/admin/uploads', adminUploadsRouter);
   app.use('/uploads', express.static(config.uploads.dir, { maxAge: '7d' }));
 
   app.use(notFoundHandler);
