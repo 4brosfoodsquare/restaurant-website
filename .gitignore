@@ -141,3 +141,44 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# ---------------------------------------------------------------------------
+# 4 Bros Food Square — project specific
+# ---------------------------------------------------------------------------
+
+# Local SQLite database files (never commit business data)
+backend/data/*.db
+backend/data/*.db-journal
+backend/data/*.db-wal
+backend/data/*.db-shm
+backend/data/*.sqlite
+backend/data/*.sqlite3
+
+# Locally uploaded menu images (user content, not source)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Build output
+frontend/dist/
+frontend/.vite/
+
+# Test / coverage output
+playwright-report/
+test-results/
+qa-screenshots/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# Netlify local state
+.netlify/
