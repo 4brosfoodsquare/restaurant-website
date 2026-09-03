@@ -56,7 +56,7 @@ export default function HomePage() {
               {signatureCategories.map((cat) => (
                 <Link key={cat.id} to={`/menu?category=${cat.slug}`} className="signature-card">
                   <div className="signature-card__media" aria-hidden="true">
-                    {cat.imageUrl ? <img src={cat.imageUrl} alt="" /> : <span>🍛</span>}
+                    {cat.imageUrl ? <img src={cat.imageUrl} alt="" loading="lazy" /> : <span>🍛</span>}
                   </div>
                   <div className="signature-card__body">
                     <h3>{cat.name}</h3>

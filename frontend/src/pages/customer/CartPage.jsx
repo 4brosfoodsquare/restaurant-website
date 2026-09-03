@@ -34,7 +34,7 @@ export default function CartPage() {
           {items.map((line) => (
             <li key={line.menuItemId} className="cart-line card">
               <div className="cart-line__media" aria-hidden="true">
-                {line.imageUrl ? <img src={line.imageUrl} alt="" /> : <span>🍽️</span>}
+                {line.imageUrl ? <img src={line.imageUrl} alt="" loading="lazy" /> : <span>🍽️</span>}
               </div>
               <div className="cart-line__info">
                 <Link to={`/menu/${line.slug}`}>{line.name}</Link>
