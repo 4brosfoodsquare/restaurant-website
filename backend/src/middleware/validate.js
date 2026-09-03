@@ -14,7 +14,16 @@ export function validate(schema, source = 'body') {
       }));
       return;
     }
-    req[source] = result.data;
+    if (source === 'query' || source === 'params') {
+      // In Express 5, req.query / req.params are getter-only accessors on
+      // some setups — reassigning the property throws. Mutate the existing
+      // object in place instead (it is itself a plain, writable object).
+      const target = req[source];
+      for (const key of Object.keys(target)) delete target[key];
+      Object.assign(target, result.data);
+    } else {
+      req[source] = result.data;
+    }
     next();
   };
 }

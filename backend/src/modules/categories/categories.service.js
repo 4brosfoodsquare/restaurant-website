@@ -1,18 +1,12 @@
-import { slugify } from '../../utils/ids.js';
+import { uniqueSlug } from '../../utils/slug.js';
 import { notFound, conflict } from '../../utils/httpError.js';
 import * as repo from './categories.repository.js';
 
-function uniqueSlug(name, { excludeId } = {}) {
-  const base = slugify(name) || 'category';
-  let candidate = base;
-  let suffix = 2;
-  // Small, bounded loop — category counts are tiny, so this never runs long.
-  while (true) {
+function nextCategorySlug(name, { excludeId } = {}) {
+  return uniqueSlug(name, (candidate) => {
     const existing = repo.findCategoryBySlug(candidate);
-    if (!existing || existing.id === excludeId) return candidate;
-    candidate = `${base}-${suffix}`;
-    suffix += 1;
-  }
+    return existing && existing.id !== excludeId;
+  });
 }
 
 export function listPublicCategories() {
@@ -30,7 +24,7 @@ export function getCategoryOrThrow(id) {
 }
 
 export function createCategory(input) {
-  const slug = uniqueSlug(input.name);
+  const slug = nextCategorySlug(input.name);
   return repo.insertCategory({ ...input, slug });
 }
 
@@ -38,7 +32,7 @@ export function updateCategory(id, input) {
   getCategoryOrThrow(id);
   const patch = { ...input };
   if (typeof input.name === 'string') {
-    patch.slug = uniqueSlug(input.name, { excludeId: id });
+    patch.slug = nextCategorySlug(input.name, { excludeId: id });
   }
   return repo.updateCategory(id, patch);
 }
