@@ -10,7 +10,7 @@ const ITEM_COLUMNS = `
   menu_items.created_at AS createdAt, menu_items.updated_at AS updatedAt,
   menu_items.category_id AS categoryId,
   categories.slug AS categorySlug, categories.name AS categoryName,
-  categories.is_signature AS categoryIsSignature
+  categories.is_signature AS categoryIsSignature, categories.is_active AS categoryIsActive
 `;
 
 const JOIN_CATEGORY = 'FROM menu_items JOIN categories ON categories.id = menu_items.category_id';

@@ -1,9 +1,16 @@
 import { unprocessable } from '../utils/httpError.js';
 
 /**
- * Validates `req[source]` against a zod schema, replacing it with the parsed
- * (and coerced/defaulted) value on success. This is the authoritative
- * validation layer — the frontend's own checks are only a UX convenience.
+ * Validates `req[source]` against a zod schema. For `body`, the parsed
+ * (coerced/defaulted) value replaces `req.body` directly — Express gives us
+ * a plain writable property there.
+ *
+ * `req.query` and `req.params` are different: in this Express version they
+ * are getter-only accessors that recompute a brand-new object from the raw
+ * URL on every single access, so neither reassigning them nor mutating the
+ * object returned by one access has any lasting effect — the next read just
+ * discards it. Route handlers must read validated query/params data from
+ * `req.validated.<source>` instead of `req.query`/`req.params`.
  */
 export function validate(schema, source = 'body') {
   return (req, res, next) => {
@@ -14,13 +21,10 @@ export function validate(schema, source = 'body') {
       }));
       return;
     }
+
     if (source === 'query' || source === 'params') {
-      // In Express 5, req.query / req.params are getter-only accessors on
-      // some setups — reassigning the property throws. Mutate the existing
-      // object in place instead (it is itself a plain, writable object).
-      const target = req[source];
-      for (const key of Object.keys(target)) delete target[key];
-      Object.assign(target, result.data);
+      req.validated ??= {};
+      req.validated[source] = result.data;
     } else {
       req[source] = result.data;
     }

@@ -16,7 +16,7 @@ import * as service from './menu.service.js';
 export const publicMenuRouter = Router();
 
 publicMenuRouter.get('/', validate(publicMenuQuerySchema, 'query'), (req, res) => {
-  res.json({ data: service.listPublicItems(req.query) });
+  res.json({ data: service.listPublicItems(req.validated.query) });
 });
 
 publicMenuRouter.get('/:slug', (req, res) => {
@@ -33,7 +33,7 @@ const canEdit = requireRole('owner', 'admin');
 const canToggleAvailability = requireRole('owner', 'admin', 'staff');
 
 adminMenuRouter.get('/', validate(adminMenuQuerySchema, 'query'), (req, res) => {
-  res.json({ data: service.listAdminItems(req.query) });
+  res.json({ data: service.listAdminItems(req.validated.query) });
 });
 
 adminMenuRouter.get('/:id', (req, res) => {

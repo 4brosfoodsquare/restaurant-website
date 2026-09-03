@@ -8,6 +8,7 @@ import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './modules/auth/auth.routes.js';
 import { publicCategoriesRouter, adminCategoriesRouter } from './modules/categories/categories.routes.js';
 import { publicMenuRouter, adminMenuRouter } from './modules/menu/menu.routes.js';
+import { publicOrdersRouter, adminOrdersRouter } from './modules/orders/orders.routes.js';
 
 export function createApp() {
   const app = express();
@@ -41,6 +42,8 @@ export function createApp() {
   app.use('/api/admin/categories', adminCategoriesRouter);
   app.use('/api/menu', publicMenuRouter);
   app.use('/api/admin/menu', adminMenuRouter);
+  app.use('/api/orders', publicOrdersRouter);
+  app.use('/api/admin/orders', adminOrdersRouter);
   app.use('/uploads', express.static(config.uploads.dir, { maxAge: '7d' }));
 
   app.use(notFoundHandler);
