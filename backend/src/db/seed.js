@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { getDb } from './index.js';
 import { runMigrations } from './migrate.js';
 import config from '../config/env.js';
