@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import config from './config/env.js';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './modules/auth/auth.routes.js';
+import { publicCategoriesRouter, adminCategoriesRouter } from './modules/categories/categories.routes.js';
 
 export function createApp() {
   const app = express();
@@ -35,6 +36,8 @@ export function createApp() {
   });
 
   app.use('/api/auth', authRoutes);
+  app.use('/api/categories', publicCategoriesRouter);
+  app.use('/api/admin/categories', adminCategoriesRouter);
   app.use('/uploads', express.static(config.uploads.dir, { maxAge: '7d' }));
 
   app.use(notFoundHandler);
