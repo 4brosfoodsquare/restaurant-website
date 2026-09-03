@@ -3,8 +3,9 @@ import rateLimit from 'express-rate-limit';
 import config from '../../config/env.js';
 import { validate } from '../../middleware/validate.js';
 import { requireAuth } from '../../middleware/auth.js';
-import { loginSchema } from './auth.schemas.js';
+import { loginSchema, changeOwnPasswordSchema } from './auth.schemas.js';
 import * as authService from './auth.service.js';
+import { changeOwnPassword } from '../users/users.service.js';
 import { recordAudit } from '../../utils/auditLog.js';
 
 const router = Router();
@@ -87,6 +88,19 @@ router.post('/logout', (req, res) => {
 
 router.get('/me', requireAuth, (req, res) => {
   res.json({ data: { id: req.user.id, email: req.user.email, name: req.user.name, role: req.user.roleKey } });
+});
+
+// Self-service password change — open to any authenticated role (unlike
+// /api/admin/users/*, which is owner/admin only), since every account
+// holder must be able to change their own password.
+router.patch('/me/password', requireAuth, validate(changeOwnPasswordSchema), async (req, res, next) => {
+  try {
+    await changeOwnPassword(req.user.id, req.body);
+    recordAudit({ actorId: req.user.id, actorEmail: req.user.email, action: 'change_own_password', entity: 'user', entityId: req.user.id, ip: req.ip });
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;
