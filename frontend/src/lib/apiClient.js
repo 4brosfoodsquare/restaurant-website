@@ -1,4 +1,9 @@
-const API_BASE = ''; // same-origin; Vite dev proxy forwards /api and /uploads to the backend.
+// Same-origin by default (dev: Vite's proxy forwards /api and /uploads to
+// the backend; production: works as-is if the backend is reverse-proxied
+// under the same domain as the built frontend). Set VITE_API_URL at build
+// time to point at a separately-hosted backend instead (e.g. the frontend
+// deployed on Netlify, the API on Render/Fly/Railway) — see docs/DEPLOYMENT.md.
+const API_BASE = import.meta.env.VITE_API_URL?.replace(/\/+$/, '') ?? '';
 
 let accessToken = null;
 let onUnauthorized = null;

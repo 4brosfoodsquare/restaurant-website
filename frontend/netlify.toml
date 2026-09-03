@@ -1,0 +1,31 @@
+# Netlify build configuration for the customer site + admin dashboard.
+#
+# This file makes the repository *ready* for Netlify — it does not deploy
+# anything by itself. Deployment happens only when a Netlify site is
+# explicitly connected to this repo and a build is explicitly triggered.
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+# Single-page app: every client-side route (e.g. /menu, /admin/orders) must
+# fall back to index.html so React Router — not Netlify's static file
+# server — decides what to render. Without this, a direct link, a bookmark,
+# or a page refresh on any non-root route 404s.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# The API is a separate, long-running Node/Express process — Netlify only
+# serves this static build. Set VITE_API_URL (in the Netlify UI, or here as
+# a per-context override) to the deployed backend's URL so the frontend
+# knows where to send /api requests. Left unset, the site assumes the API
+# is reverse-proxied under this same domain. See ../docs/DEPLOYMENT.md.
+#
+# [context.production.environment]
+#   VITE_API_URL = "https://api.yourdomain.com"
