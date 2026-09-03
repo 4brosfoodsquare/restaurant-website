@@ -34,7 +34,7 @@
 
 .cart-line__info { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
 .cart-line__info a { font-weight: 600; }
-.cart-line__info a:hover { color: var(--color-amber-600); }
+.cart-line__info a:hover { color: var(--color-amber-text); }
 .cart-line__unit-price { font-size: var(--text-sm); color: var(--color-text-muted); }
 
 .cart-line__total { font-weight: 700; font-family: var(--font-display); white-space: nowrap; }

@@ -133,7 +133,7 @@ p { margin: 0; }
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
-.badge-amber { background: var(--color-amber-50); color: var(--color-amber-600); }
+.badge-amber { background: var(--color-amber-50); color: var(--color-amber-text); }
 .badge-red { background: var(--color-red-50); color: var(--color-red-700); }
 .badge-success { background: var(--color-success-bg); color: var(--color-success); }
 .badge-warning { background: var(--color-warning-bg); color: #8a5613; }
@@ -234,12 +234,12 @@ p { margin: 0; }
   background: none;
   border: none;
   padding: 0;
-  color: var(--color-amber-600);
+  color: var(--color-amber-text);
   font-weight: 700;
   cursor: pointer;
   text-decoration: underline;
 }
-.link-button:hover { color: var(--color-amber-500); }
+.link-button:hover { color: var(--color-amber-600); }
 
 /* Filter chip (menu category/diet filters, admin status tabs) ------------
    Shared across multiple lazy-loaded routes, so it lives in the globally

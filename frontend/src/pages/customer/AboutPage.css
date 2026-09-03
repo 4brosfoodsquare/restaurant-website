@@ -1,7 +1,7 @@
 .about-page { padding-block: var(--space-10) var(--space-16); }
 .about-page__header { max-width: 640px; margin-bottom: var(--space-8); }
 .about-page__header h1 { font-size: var(--text-4xl); margin-bottom: var(--space-2); }
-.about-page__tagline { color: var(--color-amber-600); font-weight: 600; }
+.about-page__tagline { color: var(--color-amber-text); font-weight: 600; }
 .about-page__body { max-width: 70ch; color: var(--color-text-muted); margin-bottom: var(--space-12); font-size: var(--text-lg); }
 
 .about-page__pillars {

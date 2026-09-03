@@ -26,7 +26,20 @@ export function Logo({ size = 40, withWordmark = true, dark = false }) {
           }}
         >
           4 Bros
-          <span style={{ display: 'block', fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-amber-500)' }}>
+          <span
+            style={{
+              display: 'block',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 600,
+              fontSize: '0.6rem',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              // amber-text is calibrated for light backgrounds (cream/paper);
+              // on the dark footer/sidebar variant it'd fail contrast, so use
+              // amber-400 there instead (7.7:1+ on ink).
+              color: dark ? 'var(--color-amber-400)' : 'var(--color-amber-text)',
+            }}
+          >
             Food Square
           </span>
         </span>

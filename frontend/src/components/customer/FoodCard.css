@@ -60,7 +60,7 @@
   font-size: var(--text-lg);
   font-weight: 600;
 }
-.food-card__title-row h3 a:hover { color: var(--color-amber-600); }
+.food-card__title-row h3 a:hover { color: var(--color-amber-text); }
 .food-card__title-row .diet-mark { margin-top: 0.3rem; }
 
 .food-card__description {

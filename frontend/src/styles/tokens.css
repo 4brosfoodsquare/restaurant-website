@@ -26,6 +26,11 @@
   --color-amber-500: #dd7e1f;
   --color-amber-600: #c06a18;
   --color-amber-50: #fdf1e1;
+  /* amber-500/600 fail WCAG AA (4.5:1) as small text on light backgrounds
+     (2.9:1 / 3.9:1). Use this for amber TEXT on cream/white/paper — it
+     holds 5:1+ there. amber-500/600 stay fine for backgrounds, borders,
+     and text on dark backgrounds (ink), where contrast is already ample. */
+  --color-amber-text: #8f4c0f;
 
   /* --- Text ---------------------------------------------------------- */
   --color-text: #241c17;

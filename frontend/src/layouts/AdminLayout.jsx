@@ -41,7 +41,7 @@ export function AdminLayout() {
           <span className="admin-sidebar__brand-mark">4B</span>
           <div>
             <strong>4 Bros Admin</strong>
-            <span>Restaurant Operations</span>
+            <span className="admin-sidebar__brand-subtitle">Restaurant Operations</span>
           </div>
         </div>
 

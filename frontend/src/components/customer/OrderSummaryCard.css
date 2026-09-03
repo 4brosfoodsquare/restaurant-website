@@ -30,7 +30,7 @@
   margin-top: var(--space-4);
   font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--color-amber-600);
+  color: var(--color-amber-text);
 }
 .order-summary-card__notes, .order-summary-card__address {
   margin-top: var(--space-3);

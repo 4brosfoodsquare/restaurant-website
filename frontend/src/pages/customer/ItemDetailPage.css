@@ -4,7 +4,7 @@
   color: var(--color-text-muted);
   margin-bottom: var(--space-6);
 }
-.item-detail__breadcrumb a:hover { color: var(--color-amber-600); }
+.item-detail__breadcrumb a:hover { color: var(--color-amber-text); }
 
 .item-detail__grid {
   display: grid;

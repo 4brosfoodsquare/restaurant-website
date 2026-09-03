@@ -10,7 +10,11 @@ export function FoodCard({ item }) {
 
   return (
     <article className="food-card card">
-      <Link to={`/menu/${item.slug}`} className="food-card__media">
+      {/* Decorative — the title link below is the real, accessible navigation
+          to this dish; without this the image-only link would have no
+          discernible name for screen readers, and with it present too we'd
+          just be a second identical stop before that one. */}
+      <Link to={`/menu/${item.slug}`} className="food-card__media" aria-hidden="true" tabIndex={-1}>
         {item.imageUrl ? (
           <img src={item.imageUrl} alt="" loading="lazy" />
         ) : (

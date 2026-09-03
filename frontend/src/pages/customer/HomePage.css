@@ -108,7 +108,7 @@
 }
 @media (min-width: 768px) { .location-grid { grid-template-columns: 1.2fr 1fr; } }
 .location-address { color: var(--color-text-muted); margin-bottom: var(--space-2); }
-.location-phone { font-weight: 700; color: var(--color-amber-600); font-size: var(--text-lg); }
+.location-phone { font-weight: 700; color: var(--color-amber-text); font-size: var(--text-lg); }
 .hours-card { padding: var(--space-5); }
 .hours-card h3 { font-size: var(--text-lg); margin-bottom: var(--space-4); }
 .hours-card ul { display: flex; flex-direction: column; gap: var(--space-2); }
