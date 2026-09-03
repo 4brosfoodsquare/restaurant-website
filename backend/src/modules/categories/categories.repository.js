@@ -1,28 +1,34 @@
 import { getDb } from '../../db/index.js';
+import { boolify, boolifyAll } from '../../utils/serialize.js';
 
 const CATEGORY_COLUMNS = `
   id, slug, name, description, image_url AS imageUrl, is_signature AS isSignature,
   is_active AS isActive, sort_order AS sortOrder, created_at AS createdAt, updated_at AS updatedAt
 `;
+const BOOLEAN_KEYS = ['isSignature', 'isActive'];
 
 export function listActiveCategories() {
-  return getDb()
-    .prepare(`SELECT ${CATEGORY_COLUMNS} FROM categories WHERE is_active = 1 ORDER BY sort_order ASC, name ASC`)
-    .all();
+  return boolifyAll(
+    getDb()
+      .prepare(`SELECT ${CATEGORY_COLUMNS} FROM categories WHERE is_active = 1 ORDER BY sort_order ASC, name ASC`)
+      .all(),
+    BOOLEAN_KEYS,
+  );
 }
 
 export function listAllCategories() {
-  return getDb()
-    .prepare(`SELECT ${CATEGORY_COLUMNS} FROM categories ORDER BY sort_order ASC, name ASC`)
-    .all();
+  return boolifyAll(
+    getDb().prepare(`SELECT ${CATEGORY_COLUMNS} FROM categories ORDER BY sort_order ASC, name ASC`).all(),
+    BOOLEAN_KEYS,
+  );
 }
 
 export function findCategoryById(id) {
-  return getDb().prepare(`SELECT ${CATEGORY_COLUMNS} FROM categories WHERE id = ?`).get(id);
+  return boolify(getDb().prepare(`SELECT ${CATEGORY_COLUMNS} FROM categories WHERE id = ?`).get(id), BOOLEAN_KEYS);
 }
 
 export function findCategoryBySlug(slug) {
-  return getDb().prepare(`SELECT ${CATEGORY_COLUMNS} FROM categories WHERE slug = ?`).get(slug);
+  return boolify(getDb().prepare(`SELECT ${CATEGORY_COLUMNS} FROM categories WHERE slug = ?`).get(slug), BOOLEAN_KEYS);
 }
 
 export function insertCategory({ slug, name, description, imageUrl, isSignature, sortOrder }) {

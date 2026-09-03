@@ -112,7 +112,7 @@ test('admin (manager) can deactivate a staff account, but not self', async () =>
     .set('Authorization', `Bearer ${adminToken}`)
     .send({ isActive: false });
   assert.equal(deactivateStaff.status, 200);
-  assert.equal(deactivateStaff.body.data.isActive, 0);
+  assert.equal(deactivateStaff.body.data.isActive, false);
 
   const deactivateSelf = await request(app)
     .patch(`/api/admin/users/${adminId}/active`)

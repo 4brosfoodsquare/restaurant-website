@@ -1,0 +1,8 @@
+.category-page__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-5); }
+.category-page__header h1 { font-size: var(--text-2xl); }
+.category-page__actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+.category-form { display: flex; flex-direction: column; gap: var(--space-4); }
+.category-form__error { background: var(--color-danger-bg); color: var(--color-red-700); padding: var(--space-3); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 600; }
+.category-form__checkbox { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: 600; }
+.category-form__actions { display: flex; gap: var(--space-3); }

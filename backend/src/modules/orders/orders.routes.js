@@ -3,7 +3,7 @@ import rateLimit from 'express-rate-limit';
 import { requireAuth, requireRole } from '../../middleware/auth.js';
 import { validate } from '../../middleware/validate.js';
 import { recordAudit } from '../../utils/auditLog.js';
-import { createOrderSchema, updateOrderStatusSchema, adminOrdersQuerySchema } from './orders.schemas.js';
+import { createOrderSchema, updateOrderStatusSchema, adminOrdersQuerySchema, lookupOrderSchema } from './orders.schemas.js';
 import * as service from './orders.service.js';
 
 const createOrderLimiter = rateLimit({
@@ -12,6 +12,15 @@ const createOrderLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: { code: 'RATE_LIMITED', message: 'Too many orders placed. Please try again in a few minutes.' } },
+});
+
+// Guards against brute-forcing the (fairly short) order reference space.
+const lookupLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: { code: 'RATE_LIMITED', message: 'Too many lookup attempts. Please try again later.' } },
 });
 
 /** Public router — mounted at /api/orders. No customer authentication required (guest ordering). */
@@ -24,6 +33,10 @@ publicOrdersRouter.post('/', createOrderLimiter, validate(createOrderSchema), (r
 
 publicOrdersRouter.get('/track/:token', (req, res) => {
   res.json({ data: service.getOrderByTrackingTokenOrThrow(req.params.token) });
+});
+
+publicOrdersRouter.post('/lookup', lookupLimiter, validate(lookupOrderSchema), (req, res) => {
+  res.json({ data: service.lookupOrderOrThrow(req.body) });
 });
 
 /** Admin router — mounted at /api/admin/orders, all routes require auth. */

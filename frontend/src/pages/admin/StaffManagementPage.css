@@ -1,0 +1,8 @@
+.staff-page__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-5); }
+.staff-page__header h1 { font-size: var(--text-2xl); }
+.staff-page__row-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.staff-page__error { background: var(--color-danger-bg); color: var(--color-red-700); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-4); font-weight: 600; font-size: var(--text-sm); }
+
+.staff-form { display: flex; flex-direction: column; gap: var(--space-4); }
+.staff-form__error { background: var(--color-danger-bg); color: var(--color-red-700); padding: var(--space-3); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 600; }
+.staff-form__actions { display: flex; gap: var(--space-3); }

@@ -1,0 +1,19 @@
+.order-status-page { padding-block: var(--space-10) var(--space-16); }
+.order-status-page h1 { font-size: var(--text-3xl); margin-bottom: var(--space-3); }
+.order-status-page__intro { color: var(--color-text-muted); margin-bottom: var(--space-6); max-width: 60ch; }
+
+.order-lookup-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-4);
+  max-width: 560px;
+  margin-bottom: var(--space-6);
+}
+.order-lookup-form .field { flex: 1; min-width: 180px; }
+.order-lookup-form__error {
+  color: var(--color-red-700);
+  font-weight: 600;
+  margin-bottom: var(--space-6);
+}
+.order-status-page__result { margin-top: var(--space-6); }

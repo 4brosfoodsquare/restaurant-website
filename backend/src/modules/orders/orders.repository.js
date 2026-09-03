@@ -52,6 +52,27 @@ export function findOrderByTrackingToken(token) {
 }
 
 /**
+ * Manual lookup for a customer who no longer has their tracking link.
+ * Requires BOTH the reference (only ~1.29e9 combinations, guessable) and the
+ * phone number used on the order — knowing just one is not enough to see
+ * someone else's order. Phone is compared digits-only so formatting
+ * differences ("+91 98765 43210" vs "9876543210") still match.
+ */
+export function findOrderByReferenceAndPhone(reference, phone) {
+  // Compare the last 10 digits only, so "+91 98765 43210" and "9876543210"
+  // are recognized as the same number regardless of country-code formatting.
+  const normalizedPhone = phone.replace(/\D/g, '').slice(-10);
+  const digitsOnlySql = "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(customer_phone, ' ', ''), '-', ''), '(', ''), ')', ''), '+', '')";
+  const order = getDb()
+    .prepare(
+      `SELECT ${ORDER_COLUMNS} FROM orders
+       WHERE reference = ? AND SUBSTR(${digitsOnlySql}, -10) = ?`,
+    )
+    .get(reference.toUpperCase(), normalizedPhone);
+  return attachItemsAndHistory(order);
+}
+
+/**
  * Creates the order, its line items, and the initial status-history row in
  * one atomic transaction — either every row is written, or none are.
  */
@@ -136,8 +157,15 @@ export function listOrdersForAdmin({ status, orderType, limit }) {
   const where = clauses.length > 0 ? `WHERE ${clauses.join(' AND ')}` : '';
   params.push(limit);
 
+  // Item count only (not the full lines) — cheap enough to include on every
+  // row via a correlated subquery, and lets the list view show it without a
+  // per-order detail fetch.
   return getDb()
-    .prepare(`SELECT ${ORDER_COLUMNS} FROM orders ${where} ORDER BY created_at DESC LIMIT ?`)
+    .prepare(
+      `SELECT ${ORDER_COLUMNS},
+              (SELECT COUNT(*) FROM order_items WHERE order_items.order_id = orders.id) AS itemCount
+       FROM orders ${where} ORDER BY created_at DESC LIMIT ?`,
+    )
     .all(...params);
 }
 

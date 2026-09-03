@@ -1,0 +1,17 @@
+.confirmation-page { padding-block: var(--space-10) var(--space-16); display: flex; flex-direction: column; align-items: center; text-align: center; }
+.confirmation-page__banner { max-width: 480px; margin-bottom: var(--space-8); }
+.confirmation-page__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  font-size: 1.75rem;
+  margin-bottom: var(--space-4);
+}
+.confirmation-page__banner h1 { font-size: var(--text-3xl); margin-bottom: var(--space-3); }
+.confirmation-page__banner p { color: var(--color-text-muted); }
+.confirmation-page__actions { display: flex; gap: var(--space-3); margin-top: var(--space-8); flex-wrap: wrap; justify-content: center; }

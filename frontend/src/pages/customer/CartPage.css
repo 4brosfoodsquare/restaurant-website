@@ -1,0 +1,64 @@
+.cart-page { padding-block: var(--space-8) var(--space-16); }
+.cart-page h1 { font-size: var(--text-3xl); margin-bottom: var(--space-8); }
+
+.cart-page__grid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+}
+@media (min-width: 860px) {
+  .cart-page__grid { grid-template-columns: 1fr 340px; }
+}
+
+.cart-list { display: flex; flex-direction: column; gap: var(--space-4); }
+.cart-line {
+  display: grid;
+  grid-template-columns: 4rem 1fr auto auto auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+@media (max-width: 560px) {
+  .cart-line { grid-template-columns: 3.5rem 1fr; grid-template-areas: "media info" "media qty" "media total" "media remove"; row-gap: var(--space-2); }
+}
+
+.cart-line__media {
+  width: 4rem; height: 4rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-cream-deep);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.cart-line__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.cart-line__info { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.cart-line__info a { font-weight: 600; }
+.cart-line__info a:hover { color: var(--color-amber-600); }
+.cart-line__unit-price { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+.cart-line__total { font-weight: 700; font-family: var(--font-display); white-space: nowrap; }
+
+.cart-line__remove {
+  background: none;
+  border: none;
+  color: var(--color-red-700);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  padding-inline: var(--space-2);
+}
+.cart-line__remove:hover { text-decoration: underline; }
+
+.cart-summary { padding: var(--space-5); position: sticky; top: 90px; }
+.cart-summary h2 { font-size: var(--text-lg); margin-bottom: var(--space-4); }
+.cart-summary__row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  padding-block: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+.cart-summary__note { font-size: var(--text-xs); color: var(--color-text-muted); margin-block: var(--space-3) var(--space-4); }
+.cart-summary__continue { display: block; text-align: center; margin-top: var(--space-4); }

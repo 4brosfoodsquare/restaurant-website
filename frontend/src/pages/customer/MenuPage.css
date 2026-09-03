@@ -1,0 +1,22 @@
+.menu-page { padding-block: var(--space-10) var(--space-16); }
+.menu-page__header { max-width: 640px; margin-bottom: var(--space-8); }
+.menu-page__header h1 { font-size: var(--text-4xl); margin-bottom: var(--space-3); }
+.menu-page__header p { color: var(--color-text-muted); }
+
+.menu-page__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+@media (min-width: 768px) {
+  .menu-page__toolbar { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+.menu-page__search { display: flex; gap: var(--space-2); max-width: 360px; width: 100%; }
+.menu-page__diet-filter, .menu-page__categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.menu-page__categories { margin-bottom: var(--space-8); }

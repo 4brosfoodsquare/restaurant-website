@@ -1,0 +1,26 @@
+.settings-page__header { margin-bottom: var(--space-6); }
+.settings-page__header h1 { font-size: var(--text-2xl); }
+.settings-page__readonly-note { color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-1); }
+
+.settings-form fieldset { border: none; padding: 0; margin: 0; }
+.settings-form__section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 720px;
+}
+.settings-form__section h2 { font-size: var(--text-lg); }
+.settings-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.settings-form__row--three { grid-template-columns: repeat(3, 1fr); }
+.settings-form__hours { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3); }
+.settings-form__checkboxes { display: flex; gap: var(--space-5); }
+.settings-form__checkboxes label { display: flex; align-items: center; gap: var(--space-2); font-weight: 600; font-size: var(--text-sm); }
+
+.settings-form__actions { display: flex; align-items: center; gap: var(--space-4); }
+.settings-form__error { color: var(--color-red-700); font-weight: 600; font-size: var(--text-sm); }
+.settings-form__saved { color: var(--color-success); font-weight: 600; font-size: var(--text-sm); }

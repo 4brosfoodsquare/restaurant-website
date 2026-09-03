@@ -64,7 +64,7 @@ export function createOrder(input, { placedByUserId = null } = {}) {
 
   for (const line of input.items) {
     const item = menuItemsById.get(line.menuItemId);
-    const isOrderable = item && item.isActive === 1 && item.isAvailable === 1 && item.categoryIsActive === 1;
+    const isOrderable = item && item.isActive && item.isAvailable && item.categoryIsActive;
     if (!isOrderable) {
       unavailable.push({ menuItemId: line.menuItemId, name: item?.name ?? null });
       continue;
@@ -134,6 +134,14 @@ export function createOrder(input, { placedByUserId = null } = {}) {
 export function getOrderByTrackingTokenOrThrow(token) {
   const order = repo.findOrderByTrackingToken(token);
   if (!order) throw notFound('We could not find an order with that tracking link.');
+  return order;
+}
+
+export function lookupOrderOrThrow({ reference, phone }) {
+  const order = repo.findOrderByReferenceAndPhone(reference, phone);
+  // Deliberately generic — never confirm whether the reference exists on its
+  // own, so this can't be used to enumerate valid order references.
+  if (!order) throw notFound('No order found with that reference and phone number.');
   return order;
 }
 

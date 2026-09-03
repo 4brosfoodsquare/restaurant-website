@@ -44,3 +44,8 @@ export const adminOrdersQuerySchema = z.object({
   orderType: z.enum(['pickup', 'delivery']).optional(),
   limit: z.coerce.number().int().min(1).max(200).default(50),
 });
+
+export const lookupOrderSchema = z.object({
+  reference: z.string().trim().min(1, 'Order reference is required.').max(20),
+  phone: z.string().trim().regex(phoneRegex, 'Enter a valid phone number.').max(20),
+});

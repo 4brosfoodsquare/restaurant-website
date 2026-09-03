@@ -1,4 +1,7 @@
 import { getDb } from '../../db/index.js';
+import { boolify, boolifyAll } from '../../utils/serialize.js';
+
+const RESPONSE_BOOLEAN_KEYS = ['isAvailable', 'isActive', 'isFeatured', 'isPopular', 'categoryIsSignature', 'categoryIsActive'];
 
 const ITEM_COLUMNS = `
   menu_items.id, menu_items.slug, menu_items.name, menu_items.description,
@@ -52,7 +55,7 @@ export function listPublicItems({ categorySlug, dietType, search, featured, popu
     WHERE ${clauses.join(' AND ')}
     ORDER BY categories.sort_order ASC, menu_items.sort_order ASC, menu_items.name ASC
   `;
-  return getDb().prepare(sql).all(...params);
+  return boolifyAll(getDb().prepare(sql).all(...params), RESPONSE_BOOLEAN_KEYS);
 }
 
 export function listAdminItems({ categorySlug, search, status = 'active' } = {}) {
@@ -77,15 +80,15 @@ export function listAdminItems({ categorySlug, search, status = 'active' } = {})
     ${where}
     ORDER BY categories.sort_order ASC, menu_items.sort_order ASC, menu_items.name ASC
   `;
-  return getDb().prepare(sql).all(...params);
+  return boolifyAll(getDb().prepare(sql).all(...params), RESPONSE_BOOLEAN_KEYS);
 }
 
 export function findItemById(id) {
-  return getDb().prepare(`SELECT ${ITEM_COLUMNS} ${JOIN_CATEGORY} WHERE menu_items.id = ?`).get(id);
+  return boolify(getDb().prepare(`SELECT ${ITEM_COLUMNS} ${JOIN_CATEGORY} WHERE menu_items.id = ?`).get(id), RESPONSE_BOOLEAN_KEYS);
 }
 
 export function findItemBySlug(slug) {
-  return getDb().prepare(`SELECT ${ITEM_COLUMNS} ${JOIN_CATEGORY} WHERE menu_items.slug = ?`).get(slug);
+  return boolify(getDb().prepare(`SELECT ${ITEM_COLUMNS} ${JOIN_CATEGORY} WHERE menu_items.slug = ?`).get(slug), RESPONSE_BOOLEAN_KEYS);
 }
 
 export function findItemBySlugRaw(slug) {
@@ -156,5 +159,8 @@ export function setItemActive(id, isActive) {
 export function findManyByIds(ids) {
   if (ids.length === 0) return [];
   const placeholders = ids.map(() => '?').join(', ');
-  return getDb().prepare(`SELECT ${ITEM_COLUMNS} ${JOIN_CATEGORY} WHERE menu_items.id IN (${placeholders})`).all(...ids);
+  return boolifyAll(
+    getDb().prepare(`SELECT ${ITEM_COLUMNS} ${JOIN_CATEGORY} WHERE menu_items.id IN (${placeholders})`).all(...ids),
+    RESPONSE_BOOLEAN_KEYS,
+  );
 }

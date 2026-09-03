@@ -1,4 +1,5 @@
 import { getDb } from '../../db/index.js';
+import { boolify, boolifyAll } from '../../utils/serialize.js';
 
 const USER_COLUMNS = `
   users.id, users.email, users.name, users.is_active AS isActive,
@@ -6,13 +7,14 @@ const USER_COLUMNS = `
   roles.key AS role
 `;
 const JOIN_ROLE = 'FROM users JOIN roles ON roles.id = users.role_id';
+const BOOLEAN_KEYS = ['isActive'];
 
 export function listUsers() {
-  return getDb().prepare(`SELECT ${USER_COLUMNS} ${JOIN_ROLE} ORDER BY users.created_at ASC`).all();
+  return boolifyAll(getDb().prepare(`SELECT ${USER_COLUMNS} ${JOIN_ROLE} ORDER BY users.created_at ASC`).all(), BOOLEAN_KEYS);
 }
 
 export function findUserByIdWithRole(id) {
-  return getDb().prepare(`SELECT ${USER_COLUMNS} ${JOIN_ROLE} WHERE users.id = ?`).get(id);
+  return boolify(getDb().prepare(`SELECT ${USER_COLUMNS} ${JOIN_ROLE} WHERE users.id = ?`).get(id), BOOLEAN_KEYS);
 }
 
 export function findUserByEmailNorm(email) {

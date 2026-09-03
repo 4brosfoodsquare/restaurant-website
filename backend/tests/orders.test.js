@@ -208,3 +208,40 @@ test('cancellation reason is stored from the note field', async () => {
   assert.equal(cancelled.status, 200);
   assert.equal(cancelled.body.data.cancellationReason, 'Customer called to cancel.');
 });
+
+test('order lookup by reference + phone succeeds, tolerating formatting differences', async () => {
+  const created = await request(app).post('/api/orders').send(
+    validPickupPayload({ customerPhone: '+91 98765 43210', idempotencyKey: 'lookup-key-1' }),
+  );
+  assert.equal(created.status, 201);
+
+  const found = await request(app)
+    .post('/api/orders/lookup')
+    .send({ reference: created.body.data.reference, phone: '9876543210' });
+  assert.equal(found.status, 200);
+  assert.equal(found.body.data.id, created.body.data.id);
+});
+
+test('order lookup fails with wrong phone, and with wrong reference', async () => {
+  const created = await request(app).post('/api/orders').send(
+    validPickupPayload({ customerPhone: '9998887776', idempotencyKey: 'lookup-key-2' }),
+  );
+
+  const wrongPhone = await request(app)
+    .post('/api/orders/lookup')
+    .send({ reference: created.body.data.reference, phone: '1112223334' });
+  assert.equal(wrongPhone.status, 404);
+
+  const wrongReference = await request(app)
+    .post('/api/orders/lookup')
+    .send({ reference: 'FB-ZZZZZZ', phone: '9998887776' });
+  assert.equal(wrongReference.status, 404);
+});
+
+test('order lookup is rate limited', async () => {
+  for (let i = 0; i < 20; i += 1) {
+    await request(app).post('/api/orders/lookup').send({ reference: 'FB-NOPE01', phone: '0000000000' });
+  }
+  const res = await request(app).post('/api/orders/lookup').send({ reference: 'FB-NOPE01', phone: '0000000000' });
+  assert.equal(res.status, 429);
+});

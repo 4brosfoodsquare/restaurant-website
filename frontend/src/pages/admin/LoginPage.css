@@ -1,0 +1,31 @@
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ink);
+  padding: var(--space-5);
+}
+.admin-login__panel {
+  width: 100%;
+  max-width: 380px;
+  padding: var(--space-8);
+}
+.admin-login__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.admin-login__brand strong { display: block; }
+.admin-login__brand span { display: block; font-size: var(--text-xs); color: var(--color-text-muted); }
+.admin-login h1 { font-size: var(--text-xl); margin-bottom: var(--space-5); }
+.admin-login form { display: flex; flex-direction: column; gap: var(--space-4); }
+.admin-login__error {
+  background: var(--color-danger-bg);
+  color: var(--color-red-700);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}

@@ -96,7 +96,7 @@ test('creating a menu item requires owner/admin, staff is forbidden', async () =
     .send({ categoryId, name: 'Owner Test Dish', priceMinor: 10000 });
   assert.equal(ownerAttempt.status, 201);
   assert.equal(ownerAttempt.body.data.slug, 'owner-test-dish');
-  assert.equal(ownerAttempt.body.data.isAvailable, 1);
+  assert.equal(ownerAttempt.body.data.isAvailable, true);
 });
 
 test('rejects creating a menu item with a non-existent category', async () => {
@@ -129,14 +129,14 @@ test('staff CAN toggle availability even though they cannot edit', async () => {
     .set('Authorization', `Bearer ${staffToken}`)
     .send({ isAvailable: false });
   assert.equal(toggled.status, 200);
-  assert.equal(toggled.body.data.isAvailable, 0);
+  assert.equal(toggled.body.data.isAvailable, false);
 
   // Unavailable items stay visible on the public menu (shown as "sold out")
   // rather than disappearing — only deactivation hides an item entirely.
   const publicList = await request(app).get('/api/menu');
   const publicItem = publicList.body.data.find((item) => item.id === id);
   assert.ok(publicItem, 'unavailable item should still appear in the public menu');
-  assert.equal(publicItem.isAvailable, 0);
+  assert.equal(publicItem.isAvailable, false);
 });
 
 test('deactivating an item removes it from public but keeps it in admin listing', async () => {
@@ -162,5 +162,5 @@ test('deactivating an item removes it from public but keeps it in admin listing'
 test('admin listing defaults to active status filter', async () => {
   const res = await request(app).get('/api/admin/menu').set('Authorization', `Bearer ${ownerToken}`);
   assert.equal(res.status, 200);
-  assert.ok(res.body.data.every((item) => item.isActive === 1));
+  assert.ok(res.body.data.every((item) => item.isActive === true));
 });

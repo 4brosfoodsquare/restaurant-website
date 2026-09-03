@@ -49,7 +49,7 @@ test('public endpoint returns only active categories, signature ones included', 
   assert.ok(slugs.includes('kabab'));
   assert.ok(slugs.includes('chilli-chicken'));
   const biriyani = res.body.data.find((c) => c.slug === 'biriyani');
-  assert.equal(biriyani.isSignature, 1);
+  assert.equal(biriyani.isSignature, true);
 });
 
 test('admin category list requires authentication', async () => {
@@ -104,7 +104,7 @@ test('deactivating a category removes it from the public listing', async () => {
     .set('Authorization', `Bearer ${ownerToken}`)
     .send({ isActive: false });
   assert.equal(deactivate.status, 200);
-  assert.equal(deactivate.body.data.isActive, 0);
+  assert.equal(deactivate.body.data.isActive, false);
 
   const publicList = await request(app).get('/api/categories');
   assert.ok(!publicList.body.data.some((c) => c.id === id));
