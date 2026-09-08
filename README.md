@@ -89,7 +89,8 @@ replace these two files — no code changes needed.
 
 ## Getting Started
 
-Requires Node.js ≥ 20.11 (see `.nvmrc`).
+Requires Node.js ≥ 22 (see `.nvmrc`) — `better-sqlite3`'s prebuilt native
+binary requires it.
 
 ```bash
 npm run install:all      # installs backend + frontend dependencies
