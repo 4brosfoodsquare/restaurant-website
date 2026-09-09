@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { formatMoney } from '../../lib/money.js';
+import { formatPrice, isPriced } from '../../lib/money.js';
 import { DIET_LABELS } from '../../lib/dietLabels.js';
 import { useCart } from '../../context/CartContext.jsx';
 import { FoodImage } from './FoodImage.jsx';
@@ -7,7 +7,12 @@ import './FoodCard.css';
 
 export function FoodCard({ item }) {
   const { addItem } = useCart();
-  const unavailable = !item.isAvailable;
+  // Two distinct states, deliberately not merged: "sold out" is the kitchen
+  // being out of something, while "not priced yet" is the owner not having
+  // set a price. Both block online ordering, but showing a Sold Out ribbon
+  // over a dish that is simply awaiting a price would be a lie.
+  const soldOut = !item.isAvailable;
+  const priced = isPriced(item.priceMinor);
 
   return (
     <article className="food-card card">
@@ -19,8 +24,8 @@ export function FoodCard({ item }) {
         {/* No label on the plate here: the dish title sits directly beneath
             it, so printing the name inside the image would just repeat it. */}
         <FoodImage src={item.imageUrl} compact />
-        {unavailable && <span className="food-card__sold-out">Sold Out</span>}
-        {!unavailable && item.isPopular && <span className="badge badge-amber food-card__ribbon">Popular</span>}
+        {soldOut && <span className="food-card__sold-out">Sold Out</span>}
+        {!soldOut && item.isPopular && <span className="badge badge-amber food-card__ribbon">Popular</span>}
       </Link>
 
       <div className="food-card__body">
@@ -34,15 +39,23 @@ export function FoodCard({ item }) {
         </div>
         {item.description && <p className="food-card__description">{item.description}</p>}
         <div className="food-card__footer">
-          <span className="food-card__price">{formatMoney(item.priceMinor)}</span>
-          <button
-            type="button"
-            className="btn btn-primary btn-sm"
-            disabled={unavailable}
-            onClick={() => addItem(item, 1)}
-          >
-            {unavailable ? 'Unavailable' : 'Add to Cart'}
-          </button>
+          <span className="food-card__price">{formatPrice(item.priceMinor)}</span>
+          {priced ? (
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              disabled={soldOut}
+              onClick={() => addItem(item, 1)}
+            >
+              {soldOut ? 'Unavailable' : 'Add to Cart'}
+            </button>
+          ) : (
+            /* A disabled button would be a dead end; send them somewhere they
+               can actually get the price instead. */
+            <Link to="/contact" className="btn btn-outline btn-sm">
+              Ask Us
+            </Link>
+          )}
         </div>
       </div>
     </article>

@@ -1,5 +1,5 @@
 .menu-page { padding-block: var(--space-12) var(--space-24); }
-.menu-page__header { max-width: 46ch; margin-bottom: var(--space-16); }
+.menu-page__header { max-width: 46ch; margin-bottom: var(--space-12); }
 .menu-page__header h1 {
   font-size: var(--text-4xl);
   letter-spacing: -0.01em;
@@ -7,46 +7,8 @@
 }
 .menu-page__header p { color: var(--color-text-muted); font-size: var(--text-lg); }
 
-.menu-category { padding-block: var(--space-12); }
-.menu-category + .menu-category { border-top: 1px solid var(--color-border); }
-/* Anchor offset so a ?category= jump doesn't tuck the heading under the
-   sticky header. */
-.menu-category { scroll-margin-top: var(--space-20); }
-
-.menu-category__intro {
-  display: grid;
-  gap: var(--space-6);
-  align-items: center;
-  margin-bottom: var(--space-8);
-}
+/* Three dishes, so the shared auto-fill grid (which would spread them thin
+   across a wide screen) gives way to three deliberate columns. */
 @media (min-width: 768px) {
-  .menu-category__intro { grid-template-columns: 320px 1fr; gap: var(--space-10); }
-}
-
-.menu-category__media {
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-}
-
-.menu-category__text h2 {
-  font-size: var(--text-3xl);
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-3);
-}
-.menu-category__text p {
-  color: var(--color-text-muted);
-  font-size: var(--text-lg);
-  line-height: 1.7;
-  max-width: 52ch;
-}
-
-.menu-category__pending {
-  color: var(--color-text-muted);
-  font-size: var(--text-sm);
-  padding: var(--space-5) var(--space-6);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  .menu-page .food-grid { grid-template-columns: repeat(3, 1fr); }
 }

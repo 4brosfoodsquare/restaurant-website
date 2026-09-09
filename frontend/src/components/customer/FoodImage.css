@@ -40,6 +40,6 @@
 }
 .food-image--on-ink .food-image__label { color: var(--color-text-on-ink-muted); }
 
-/* Compact frames render no lettering at all (see FoodImage.jsx), so this
-   only needs to drop the padding the labelled variant reserves for it. */
-.food-image--compact.food-image--placeholder { padding: 0; gap: 0; }
+/* Compact frames carry the rules but no lettering (see FoodImage.jsx), so
+   they need less breathing room than the labelled variant. */
+.food-image--compact.food-image--placeholder { padding: var(--space-4); gap: var(--space-3); }

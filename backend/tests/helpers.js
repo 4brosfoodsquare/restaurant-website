@@ -19,19 +19,19 @@ export function useIsolatedDatabase() {
 /**
  * Menu items for tests that need something orderable.
  *
- * The production seed deliberately ships no menu items — real dish names and
- * prices belong to the restaurant, not to this repo — so tests create their
- * own fixtures rather than leaning on demo rows. Covers the cases the suites
- * assert against: several items in one category, a vegetarian item, and a
- * name containing "Chilli" for the search test.
+ * The production seed ships the three signature dishes with a price of 0 —
+ * real prices belong to the restaurant, not to this repo — so anything that
+ * needs an orderable item creates its own priced fixtures instead. Covers the
+ * cases the suites assert against: several priced items, a vegetarian item,
+ * and a name containing "Chilli" for the search test.
  */
 export const TEST_MENU_ITEMS = [
-  { slug: 'test-chicken-biriyani', name: 'Test Chicken Biriyani', category: 'biriyani', price: 24900, diet: 'non_veg', spice: 2 },
-  { slug: 'test-mutton-biriyani', name: 'Test Mutton Biriyani', category: 'biriyani', price: 34900, diet: 'non_veg', spice: 2 },
-  { slug: 'test-veg-biriyani', name: 'Test Veg Biriyani', category: 'biriyani', price: 19900, diet: 'veg', spice: 1 },
-  { slug: 'test-seekh-kabab', name: 'Test Seekh Kabab', category: 'kabab', price: 21900, diet: 'non_veg', spice: 2 },
-  { slug: 'test-paneer-kabab', name: 'Test Paneer Kabab', category: 'kabab', price: 18900, diet: 'veg', spice: 1 },
-  { slug: 'test-chilli-chicken', name: 'Test Chilli Chicken', category: 'chilli-chicken', price: 22900, diet: 'non_veg', spice: 3 },
+  { slug: 'test-chicken-biriyani', name: 'Test Chicken Biriyani', category: 'signature', price: 24900, diet: 'non_veg', spice: 2 },
+  { slug: 'test-mutton-biriyani', name: 'Test Mutton Biriyani', category: 'signature', price: 34900, diet: 'non_veg', spice: 2 },
+  { slug: 'test-veg-biriyani', name: 'Test Veg Biriyani', category: 'signature', price: 19900, diet: 'veg', spice: 1 },
+  { slug: 'test-seekh-kabab', name: 'Test Seekh Kabab', category: 'signature', price: 21900, diet: 'non_veg', spice: 2 },
+  { slug: 'test-paneer-kabab', name: 'Test Paneer Kabab', category: 'signature', price: 18900, diet: 'veg', spice: 1 },
+  { slug: 'test-chilli-chicken', name: 'Test Chilli Chicken', category: 'signature', price: 22900, diet: 'non_veg', spice: 3 },
 ];
 
 export function createTestMenuItems(db) {

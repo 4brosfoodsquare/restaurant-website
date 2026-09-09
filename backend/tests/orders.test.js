@@ -37,9 +37,12 @@ before(async () => {
   );
   staffToken = await loginAs('staff@example.com', 'StaffPass!123');
 
-  const menu = await request(app).get('/api/menu?category=biriyani');
-  biriyaniItem = menu.body.data[0];
-  secondItem = menu.body.data[1];
+  // Address the priced fixtures by slug: the seeded signature dishes carry a
+  // price of 0 and are not orderable, so position in the list is not safe.
+  const menu = await request(app).get('/api/menu');
+  const bySlug = Object.fromEntries(menu.body.data.map((i) => [i.slug, i]));
+  biriyaniItem = bySlug['test-chicken-biriyani'];
+  secondItem = bySlug['test-mutton-biriyani'];
 });
 
 after(() => {

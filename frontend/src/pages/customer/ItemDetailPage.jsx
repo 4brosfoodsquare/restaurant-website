@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../../hooks/usePageTitle.js';
 import { useApiQuery } from '../../hooks/useApiQuery.js';
 import { useCart } from '../../context/CartContext.jsx';
-import { formatMoney } from '../../lib/money.js';
+import { formatMoney, formatPrice, isPriced } from '../../lib/money.js';
 import { DIET_LABELS, SPICE_LABELS } from '../../lib/dietLabels.js';
 import { LoadingState, ErrorState } from '../../components/shared/StateViews.jsx';
 import { FoodImage } from '../../components/customer/FoodImage.jsx';
@@ -34,7 +34,8 @@ export default function ItemDetailPage() {
   }
   if (status === 'error') return <ErrorState onRetry={refetch} />;
 
-  const unavailable = !item.isAvailable;
+  const soldOut = !item.isAvailable;
+  const priced = isPriced(item.priceMinor);
 
   function handleAddToCart() {
     addItem(item, quantity);
@@ -52,7 +53,7 @@ export default function ItemDetailPage() {
       <div className="item-detail__grid">
         <div className="item-detail__media">
           <FoodImage src={item.imageUrl} label={item.name} eager />
-          {unavailable && <span className="item-detail__sold-out">Currently Unavailable</span>}
+          {soldOut && <span className="item-detail__sold-out">Currently Unavailable</span>}
         </div>
 
         <div className="item-detail__info">
@@ -67,10 +68,20 @@ export default function ItemDetailPage() {
           </div>
 
           <h1>{item.name}</h1>
-          <p className="item-detail__price">{formatMoney(item.priceMinor)}</p>
+          <p className="item-detail__price">{formatPrice(item.priceMinor)}</p>
           {item.description && <p className="item-detail__description">{item.description}</p>}
 
-          {unavailable ? (
+          {!priced ? (
+            <div className="item-detail__enquire">
+              <p className="item-detail__unavailable-note">
+                We haven&rsquo;t published a price for this dish online yet. Get in touch and
+                we&rsquo;ll tell you what it costs today.
+              </p>
+              <Link to="/contact" className="btn btn-primary btn-lg">
+                Ask Us
+              </Link>
+            </div>
+          ) : soldOut ? (
             <p className="item-detail__unavailable-note">
               This item is currently unavailable. Please check back later or browse other dishes.
             </p>

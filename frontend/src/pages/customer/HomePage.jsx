@@ -11,13 +11,15 @@ const DAY_LABELS = { mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu', fri: 'Fri',
 export default function HomePage() {
   usePageTitle();
   const { settings } = useSettings();
-  const categories = useApiQuery('/api/categories');
+  // The three offerings are menu items, not categories — they're the things a
+  // customer actually orders, so the cards link straight to the dish.
+  const dishes = useApiQuery('/api/menu?featured=true');
 
-  const signatureCategories = (categories.data ?? []).filter((c) => c.isSignature);
-  // The hero frame borrows the first signature photo the owner has uploaded,
-  // so the page gains real food imagery the moment one exists — without
-  // needing a separate hero-image setting to be filled in first.
-  const heroImage = signatureCategories.find((c) => c.imageUrl)?.imageUrl;
+  const signatureDishes = dishes.data ?? [];
+  // The hero frame borrows the first dish photo the owner has uploaded, so the
+  // page gains real food imagery the moment one exists — without needing a
+  // separate hero-image setting to be filled in first.
+  const heroImage = signatureDishes.find((d) => d.imageUrl)?.imageUrl;
 
   return (
     <>
@@ -50,19 +52,19 @@ export default function HomePage() {
           <h2 className="section__title">What We Cook</h2>
           <p className="section__subtitle">Three dishes. That is the whole menu, and that is on purpose.</p>
 
-          {categories.status === 'loading' && <LoadingState label="Loading menu…" />}
-          {categories.status === 'error' && <ErrorState onRetry={categories.refetch} />}
-          {categories.status === 'success' && (
+          {dishes.status === 'loading' && <LoadingState label="Loading menu…" />}
+          {dishes.status === 'error' && <ErrorState onRetry={dishes.refetch} />}
+          {dishes.status === 'success' && (
             <div className="signature-grid">
-              {signatureCategories.map((cat) => (
-                <Link key={cat.id} to={`/menu?category=${cat.slug}`} className="signature-card">
+              {signatureDishes.map((dish) => (
+                <Link key={dish.id} to={`/menu/${dish.slug}`} className="signature-card">
                   <div className="signature-card__media">
-                    <FoodImage src={cat.imageUrl} label={cat.name} />
+                    <FoodImage src={dish.imageUrl} label={dish.name} />
                   </div>
                   <div className="signature-card__body">
-                    <h3>{cat.name}</h3>
-                    <p>{cat.description}</p>
-                    <span className="signature-card__link">See {cat.name}</span>
+                    <h3>{dish.name}</h3>
+                    <p>{dish.description}</p>
+                    <span className="signature-card__link">See {dish.name}</span>
                   </div>
                 </Link>
               ))}

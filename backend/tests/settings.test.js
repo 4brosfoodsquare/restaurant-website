@@ -114,7 +114,7 @@ test('disabling delivery via settings makes a delivery order fail', async () => 
     .set('Authorization', `Bearer ${ownerToken}`)
     .send({ orderTypesEnabled: ['pickup'] });
 
-  const menu = await request(app).get('/api/menu?category=biriyani');
+  const menu = await request(app).get('/api/menu?q=Test Chicken Biriyani');
   const res = await request(app).post('/api/orders').send({
     orderType: 'delivery',
     customerName: 'Test',

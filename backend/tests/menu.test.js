@@ -43,17 +43,19 @@ after(() => {
 test('public menu listing returns active+available items from active categories with category info', async () => {
   const res = await request(app).get('/api/menu');
   assert.equal(res.status, 200);
-  assert.equal(res.body.data.length, TEST_MENU_ITEMS.length);
+  // Seeded signature dishes plus the priced fixtures this suite creates.
+  assert.ok(res.body.data.length >= TEST_MENU_ITEMS.length);
+  assert.ok(TEST_MENU_ITEMS.every((f) => res.body.data.some((i) => i.slug === f.slug)));
   const first = res.body.data[0];
   assert.ok('priceMinor' in first);
   assert.ok('categorySlug' in first);
 });
 
 test('public menu can be filtered by category slug', async () => {
-  const res = await request(app).get('/api/menu?category=biriyani');
+  const res = await request(app).get('/api/menu?category=signature');
   assert.equal(res.status, 200);
   assert.ok(res.body.data.length > 0);
-  assert.ok(res.body.data.every((item) => item.categorySlug === 'biriyani'));
+  assert.ok(res.body.data.every((item) => item.categorySlug === 'signature'));
 });
 
 test('public menu can be filtered by diet type', async () => {
@@ -70,7 +72,7 @@ test('public menu search matches name', async () => {
 });
 
 test('public item detail by slug works, unknown slug is 404', async () => {
-  const list = await request(app).get('/api/menu?category=biriyani');
+  const list = await request(app).get('/api/menu?category=signature');
   const slug = list.body.data[0].slug;
 
   const found = await request(app).get(`/api/menu/${slug}`);

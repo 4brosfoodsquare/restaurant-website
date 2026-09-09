@@ -71,20 +71,12 @@ async function seed() {
   console.log('[seed] restaurant settings ensured');
 
   // --- The three signature offerings ---------------------------------------
-  // Deliberately three, and only three. The focused menu is part of the
-  // brand, not a gap waiting to be filled. Descriptions assert only what the
-  // restaurant has confirmed (homemade food, homemade masalas) plus each
-  // dish's own generic identity — no invented preparation methods, origins
-  // or history. The owner edits all of this in Admin → Categories.
-  const categories = [
-    { slug: 'biriyani', name: 'Biriyani', signature: true, sort: 1,
-      description: 'Rice, meat and our own homemade masalas.' },
-    { slug: 'kabab', name: 'Kabab', signature: true, sort: 2,
-      description: 'Grilled, and marinated in masalas we make ourselves.' },
-    { slug: 'chilli-chicken', name: 'Chilli Chicken', signature: true, sort: 3,
-      description: 'Indo-Chinese, spiced with our own homemade blends.' },
-  ];
-
+  // Biriyani, Kabab and Chilli Chicken are fixed menu ITEMS, not categories —
+  // they are the things a customer orders. The schema requires every item to
+  // belong to a category, so one bucket holds all three; it exists for the
+  // data model rather than for the storefront, which shows the dishes
+  // directly. If the menu ever grows, the owner adds categories and items in
+  // the admin dashboard with no code change.
   const insertCategory = db.prepare(
     `INSERT INTO categories (slug, name, description, is_signature, sort_order)
      VALUES (@slug, @name, @description, @signature, @sort)
@@ -95,16 +87,50 @@ async function seed() {
        sort_order = excluded.sort_order,
        updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')`,
   );
-  for (const cat of categories) {
-    insertCategory.run({ ...cat, signature: cat.signature ? 1 : 0 });
-  }
-  console.log(`[seed] ensured ${categories.length} categories`);
+  insertCategory.run({
+    slug: 'signature',
+    name: 'Our Dishes',
+    description: 'The three dishes we cook.',
+    signature: 1,
+    sort: 1,
+  });
+  const signatureCategoryId = db.prepare('SELECT id FROM categories WHERE slug = ?').get('signature').id;
+  console.log('[seed] ensured menu category');
 
-  // No menu items are seeded on purpose. Real dish names, prices, portions
-  // and photography come from the restaurant and get entered in
-  // Admin → Menu; inventing them here would put fake prices in front of
-  // customers. The three categories above carry the storefront until then,
-  // and the schema is ready for items to be added without any code change.
+  // Descriptions assert only what the restaurant has confirmed (homemade
+  // food, homemade masalas) plus each dish's own generic identity — no
+  // invented preparation methods, origins or history.
+  //
+  // Prices seed at 0, which the storefront renders as "Price on request"
+  // rather than "₹0" (see formatMoney callers). Real prices are the
+  // restaurant's to set in Admin → Menu; putting invented numbers in front
+  // of customers would be worse than asking them to call. Diet type stays
+  // 'unspecified' for the same reason — it hasn't been confirmed.
+  const items = [
+    { slug: 'biriyani', name: 'Biriyani', sort: 1,
+      description: 'Rice, meat and our own homemade masalas.' },
+    { slug: 'kabab', name: 'Kabab', sort: 2,
+      description: 'Grilled, and marinated in masalas we make ourselves.' },
+    { slug: 'chilli-chicken', name: 'Chilli Chicken', sort: 3,
+      description: 'Indo-Chinese, spiced with our own homemade blends.' },
+  ];
+
+  const insertItem = db.prepare(
+    `INSERT INTO menu_items
+       (category_id, slug, name, description, price_minor, diet_type, is_featured, sort_order)
+     VALUES (@category_id, @slug, @name, @description, 0, 'unspecified', 1, @sort)
+     ON CONFLICT(slug) DO UPDATE SET
+       category_id = excluded.category_id,
+       name = excluded.name,
+       description = excluded.description,
+       is_featured = excluded.is_featured,
+       sort_order = excluded.sort_order,
+       updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')`,
+  );
+  for (const item of items) {
+    insertItem.run({ ...item, category_id: signatureCategoryId });
+  }
+  console.log(`[seed] ensured ${items.length} signature dishes`);
 
   console.log('\n[seed] done.');
   console.log(`[seed] admin login → ${config.seed.adminEmail} / (see backend/.env SEED_ADMIN_PASSWORD)`);

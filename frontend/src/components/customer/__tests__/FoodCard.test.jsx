@@ -66,3 +66,26 @@ describe('FoodCard', () => {
     expect(screen.getByRole('button', { name: 'Unavailable' })).toBeDisabled();
   });
 });
+
+describe('FoodCard — dish awaiting a price', () => {
+  const unpriced = { ...baseItem, priceMinor: 0 };
+
+  it('never renders a zero price', () => {
+    renderCard(unpriced);
+    expect(screen.getByText('Price on request')).toBeInTheDocument();
+    expect(screen.queryByText('₹0')).not.toBeInTheDocument();
+  });
+
+  it('offers a way to ask rather than a dead Add to Cart button', () => {
+    renderCard(unpriced);
+    expect(screen.queryByRole('button', { name: /add to cart/i })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /ask us/i })).toHaveAttribute('href', '/contact');
+  });
+
+  // Awaiting a price is not the same as being out of stock, and saying so
+  // would misinform the customer.
+  it('does not claim the dish is sold out', () => {
+    renderCard(unpriced);
+    expect(screen.queryByText(/sold out/i)).not.toBeInTheDocument();
+  });
+});

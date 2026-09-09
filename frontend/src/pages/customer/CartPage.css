@@ -62,3 +62,7 @@
 }
 .cart-summary__note { font-size: var(--text-xs); color: var(--color-text-muted); margin-block: var(--space-3) var(--space-4); }
 .cart-summary__continue { display: block; text-align: center; margin-top: var(--space-4); }
+
+/* At 4rem even the hairline rules are clutter — the cart thumbnail keeps only
+   the warm ground. */
+.cart-line__media .food-image__rule { display: none; }
