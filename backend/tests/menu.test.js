@@ -167,3 +167,39 @@ test('admin listing defaults to active status filter', async () => {
   assert.equal(res.status, 200);
   assert.ok(res.body.data.every((item) => item.isActive === true));
 });
+
+// Regression: updateMenuItemSchema used to be createMenuItemSchema.partial(),
+// which still applied the creation defaults to keys the caller never sent. The
+// practical effect was severe — saving a price in the admin form blanked the
+// dish's description and un-featured it, dropping it off the homepage.
+test('a partial update leaves untouched fields alone', async () => {
+  const categories = await request(app).get('/api/categories');
+  const created = await request(app)
+    .post('/api/admin/menu')
+    .set('Authorization', `Bearer ${ownerToken}`)
+    .send({
+      categoryId: categories.body.data[0].id,
+      name: 'Partial Update Dish',
+      description: 'Original description.',
+      priceMinor: 15000,
+      dietType: 'veg',
+      spiceLevel: 2,
+      isFeatured: true,
+      isPopular: true,
+    });
+  assert.equal(created.status, 201);
+
+  const patched = await request(app)
+    .patch(`/api/admin/menu/${created.body.data.id}`)
+    .set('Authorization', `Bearer ${ownerToken}`)
+    .send({ priceMinor: 28000 });
+  assert.equal(patched.status, 200);
+
+  const item = patched.body.data;
+  assert.equal(item.priceMinor, 28000, 'the sent field should change');
+  assert.equal(item.description, 'Original description.');
+  assert.equal(item.dietType, 'veg');
+  assert.equal(item.spiceLevel, 2);
+  assert.equal(item.isFeatured, true);
+  assert.equal(item.isPopular, true);
+});

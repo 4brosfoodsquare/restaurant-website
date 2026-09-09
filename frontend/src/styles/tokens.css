@@ -24,8 +24,16 @@
   --color-cream-deep: #efe0cd;
   --color-paper: #fff8ee;
 
-  /* The brand red. 6.90:1 on warm white, 6.20:1 on cream — safe for text
-     and for white-on-red buttons alike. */
+  /* Red splits by job, because one red cannot do both well:
+       --color-red-brand is the vivid signage red, for FILLS — the hero, the
+         primary button, the order band. Warm white on it is 4.75:1, fine for
+         the large type and button labels that sit there.
+       --color-red-600 is the deeper red for TEXT and borders on light
+         backgrounds (6.20:1 on cream). The vivid red only manages 4.26:1
+         there, which fails AA for the small bold links that use it.
+     A brighter red still (#ED1C24 and up) drops white text below 4.5:1, so
+     this is as vivid as the palette goes without hurting legibility. */
+  --color-red-brand: #d62828;
   --color-red-600: #a8201a;
   --color-red-700: #751712;
   --color-red-800: #5c110d;

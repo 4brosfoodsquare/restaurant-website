@@ -24,28 +24,38 @@
 .section__empty { color: var(--color-text-muted); }
 
 /* Hero ------------------------------------------------------------- */
+/* The brand red carries the hero outright. No photo frame: an empty panel
+   waiting for photography reads as a missing asset, so until a dish photo
+   exists the red simply is the hero. */
 .hero {
-  background: var(--color-ink);
-  color: var(--color-text-on-ink);
-  padding-block: var(--space-20);
+  background: var(--color-red-brand);
+  background-size: cover;
+  background-position: center;
+  color: var(--color-paper);
+  padding-block: var(--space-24);
+  text-align: center;
+  position: relative;
 }
-.hero__inner {
-  display: grid;
-  gap: var(--space-12);
-  align-items: center;
+/* Once the owner uploads a dish photo it becomes the backdrop, with the red
+   laid over it so the headline keeps its contrast. */
+.hero--has-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(214, 40, 40, 0.88), rgba(117, 23, 18, 0.92));
 }
-/* Copy and food sit side by side once there's room, so the hero never reads
-   as a large empty dark band. */
+.hero__inner { position: relative; max-width: 46ch; }
 @media (min-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr 1fr; gap: var(--space-16); }
-  .hero { padding-block: var(--space-24); }
+  .hero { padding-block: var(--space-24) var(--space-24); }
 }
 .hero__eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: var(--text-xs);
   font-weight: 700;
-  color: var(--color-gold);
+  /* Not gold: gold manages only 2.1:1 on this red. */
+  color: var(--color-cream);
+  opacity: 0.9;
   margin-bottom: var(--space-5);
 }
 .hero h1 {
@@ -54,27 +64,29 @@
   letter-spacing: -0.02em;
   color: var(--color-paper);
   margin-bottom: var(--space-6);
+  text-wrap: balance;
 }
 .hero__lead {
   font-size: var(--text-lg);
   line-height: 1.65;
-  color: var(--color-text-on-ink-muted);
+  color: var(--color-cream);
   margin-bottom: var(--space-8);
-  max-width: 46ch;
 }
-.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-.hero__secondary { border-color: rgba(243, 231, 215, 0.35); color: var(--color-text-on-ink); }
-.hero__secondary:hover { background: rgba(243, 231, 215, 0.08); }
-
-.hero__media {
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  border: 1px solid var(--color-ink-border);
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
 }
-@media (max-width: 899px) {
-  .hero__media { aspect-ratio: 16 / 10; }
+/* On red, a red button disappears — invert it so the primary action stays
+   the strongest thing in the section. */
+.hero__primary {
+  background: var(--color-paper);
+  color: var(--color-red-700);
 }
+.hero__primary:hover { background: #fff; }
+.hero__secondary { border-color: rgba(255, 248, 238, 0.55); color: var(--color-paper); }
+.hero__secondary:hover { background: rgba(255, 248, 238, 0.12); }
 
 /* The three offerings ------------------------------------------------ */
 .signature-grid {

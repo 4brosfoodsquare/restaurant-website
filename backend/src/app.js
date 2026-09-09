@@ -51,7 +51,23 @@ export function createApp() {
   app.use('/api/admin/settings', adminSettingsRouter);
   app.use('/api/admin/uploads', adminUploadsRouter);
   app.use('/api/admin/users', adminUsersRouter);
-  app.use('/uploads', express.static(config.uploads.dir, { maxAge: '7d' }));
+  // Menu photos are public assets embedded by the customer site, which does
+  // not necessarily share this origin — in development it's Vite on :5173,
+  // and in production the frontend may be on a static host with the API on
+  // its own domain. Helmet's default Cross-Origin-Resource-Policy of
+  // "same-origin" makes the browser refuse to render them in exactly those
+  // cases (curl still fetches them fine, which hides the problem), so this
+  // one route opts into cross-origin embedding. Everything else keeps the
+  // strict default.
+  app.use(
+    '/uploads',
+    express.static(config.uploads.dir, {
+      maxAge: '7d',
+      setHeaders(res) {
+        res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+      },
+    }),
+  );
 
   app.use(notFoundHandler);
   app.use(errorHandler);

@@ -16,33 +16,31 @@ export default function HomePage() {
   const dishes = useApiQuery('/api/menu?featured=true');
 
   const signatureDishes = dishes.data ?? [];
-  // The hero frame borrows the first dish photo the owner has uploaded, so the
-  // page gains real food imagery the moment one exists — without needing a
-  // separate hero-image setting to be filled in first.
+  // Once the owner uploads a dish photo it becomes the hero's backdrop, sitting
+  // behind the brand red rather than in a panel of its own. Until then the hero
+  // is simply red — an empty photo frame would look like a missing asset.
   const heroImage = signatureDishes.find((d) => d.imageUrl)?.imageUrl;
 
   return (
     <>
-      <section className="hero">
+      <section
+        className={`hero ${heroImage ? 'hero--has-photo' : ''}`}
+        style={heroImage ? { backgroundImage: `url(${heroImage})` } : undefined}
+      >
         <div className="container hero__inner">
-          <div className="hero__copy">
-            <p className="hero__eyebrow">Homemade food · Homemade masalas</p>
-            <h1>{settings?.tagline || 'Few dishes. Made with care.'}</h1>
-            <p className="hero__lead">
-              {settings?.description ||
-                'Biriyani, kabab and chilli chicken, cooked with masalas we make ourselves. A short menu, so every plate gets the attention it deserves.'}
-            </p>
-            <div className="hero__actions">
-              <Link to="/menu" className="btn btn-primary btn-lg">
-                Order Now
-              </Link>
-              <Link to="/menu" className="btn btn-outline btn-lg hero__secondary">
-                View Menu
-              </Link>
-            </div>
-          </div>
-          <div className="hero__media">
-            <FoodImage src={heroImage} label="4 Bros Food Square" eager />
+          <p className="hero__eyebrow">Homemade food · Homemade masalas</p>
+          <h1>{settings?.tagline || 'Few dishes. Made with care.'}</h1>
+          <p className="hero__lead">
+            {settings?.description ||
+              'Biriyani, kabab and chilli chicken, cooked with masalas we make ourselves. A short menu, so every plate gets the attention it deserves.'}
+          </p>
+          <div className="hero__actions">
+            <Link to="/menu" className="btn btn-lg hero__primary">
+              Order Now
+            </Link>
+            <Link to="/menu" className="btn btn-outline btn-lg hero__secondary">
+              View Menu
+            </Link>
           </div>
         </div>
       </section>

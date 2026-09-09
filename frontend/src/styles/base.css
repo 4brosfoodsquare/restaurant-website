@@ -79,11 +79,11 @@ p { margin: 0; }
 .btn:active:not(:disabled) { transform: translateY(1px); }
 
 .btn-primary {
-  background: var(--color-red-600);
-  /* Warm white, not ink: ink on this red is 2.53:1, warm white is 6.90:1. */
+  background: var(--color-red-brand);
+  /* Warm white, not ink: ink on this red is barely 2:1, warm white is 4.75:1. */
   color: var(--color-paper);
 }
-.btn-primary:hover:not(:disabled) { background: var(--color-red-700); }
+.btn-primary:hover:not(:disabled) { background: var(--color-red-600); }
 
 .btn-dark {
   background: var(--color-ink);

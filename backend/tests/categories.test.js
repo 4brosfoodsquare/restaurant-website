@@ -136,3 +136,25 @@ test('returns 404 for a category that does not exist', async () => {
   const res = await request(app).get('/api/admin/categories/999999').set('Authorization', `Bearer ${ownerToken}`);
   assert.equal(res.status, 404);
 });
+
+// Same defaults-on-partial-update bug as menu items: renaming a category used
+// to wipe its description and clear its signature flag.
+test('a partial category update leaves untouched fields alone', async () => {
+  const created = await request(app)
+    .post('/api/admin/categories')
+    .set('Authorization', `Bearer ${ownerToken}`)
+    .send({ name: 'Partial Category', description: 'Original text.', isSignature: true, sortOrder: 7 });
+  assert.equal(created.status, 201);
+
+  const patched = await request(app)
+    .patch(`/api/admin/categories/${created.body.data.id}`)
+    .set('Authorization', `Bearer ${ownerToken}`)
+    .send({ name: 'Renamed Category' });
+  assert.equal(patched.status, 200);
+
+  const cat = patched.body.data;
+  assert.equal(cat.name, 'Renamed Category', 'the sent field should change');
+  assert.equal(cat.description, 'Original text.');
+  assert.equal(cat.isSignature, true);
+  assert.equal(cat.sortOrder, 7);
+});

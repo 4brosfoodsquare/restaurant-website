@@ -76,6 +76,23 @@ test('owner can upload a valid PNG and gets back an absolute usable URL', async 
   assert.ok(fs.existsSync(savedPath));
 });
 
+// Regression: helmet defaults every response to Cross-Origin-Resource-Policy
+// "same-origin", which made browsers refuse to render menu photos on the
+// customer site whenever it ran on a different origin than the API — the dev
+// server on :5173, or a static frontend host in production. curl fetched the
+// same file happily, so only a real browser caught it.
+test('served menu photos may be embedded from another origin', async () => {
+  const upload = await request(app)
+    .post('/api/admin/uploads/image')
+    .set('Authorization', `Bearer ${ownerToken}`)
+    .attach('image', VALID_PNG, 'dish.png');
+  assert.equal(upload.status, 201);
+
+  const res = await request(app).get(`/uploads/${path.basename(upload.body.data.url)}`);
+  assert.equal(res.status, 200);
+  assert.equal(res.headers['cross-origin-resource-policy'], 'cross-origin');
+});
+
 test('rejects a non-image file even when named and labelled as one', async () => {
   const res = await request(app)
     .post('/api/admin/uploads/image')
