@@ -11,19 +11,42 @@
 @media (min-width: 640px) { .dashboard-stats { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 960px) { .dashboard-stats { grid-template-columns: repeat(6, 1fr); } }
 
+/* Same structure as the homepage dish cards: a red block on top carrying the
+   figure, a cream strip beneath carrying the label. The number is what gets
+   scanned, so it takes the coloured half. */
 .dashboard-stats__card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: var(--space-4);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
 }
-a.dashboard-stats__card:hover { border-color: var(--color-red-600); }
-.dashboard-stats__card--alert { border-color: var(--color-red-600); background: var(--color-red-50); }
-.dashboard-stats__value { font-size: var(--text-2xl); font-weight: 700; font-family: var(--font-display); }
-.dashboard-stats__label { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 600; }
+a.dashboard-stats__card:hover {
+  border-color: var(--color-red-600);
+  transform: translateY(-2px);
+}
+.dashboard-stats__value {
+  background: var(--color-red-600);
+  color: var(--color-text-on-brand);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  font-family: var(--font-display);
+  line-height: 1;
+  padding: var(--space-5) var(--space-4);
+}
+.dashboard-stats__label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  padding: var(--space-3) var(--space-4);
+}
+/* New orders need to stand out from the other five at a glance, so the alert
+   tile takes the vivid brand red against their deeper one, plus a matching
+   border. (The banner below the row is still the primary signal.) */
+.dashboard-stats__card--alert { border-color: var(--color-red-brand); }
+.dashboard-stats__card--alert .dashboard-stats__value { background: var(--color-red-brand); }
 
 .dashboard-alert {
   display: flex;
