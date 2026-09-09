@@ -1,0 +1,55 @@
+# Fly.io configuration for the 4 Bros Food Square API.
+#
+# Netlify serves the static frontend; this is the long-running Node process it
+# talks to — the API, the SQLite database and the uploaded dish photos.
+#
+# `app` must be globally unique across Fly. If `fly launch` says the name is
+# taken, change it here and in PUBLIC_API_URL to match.
+
+app = "4bros-food-square-api"
+primary_region = "sin"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "8080"
+
+  # Both live on the persistent volume mounted below, so they survive
+  # redeploys and restarts. On an ephemeral filesystem every order taken and
+  # every photo uploaded would be lost on the next deploy.
+  DATABASE_FILE = "/data/app.db"
+  UPLOAD_DIR = "/data/uploads"
+
+  # Fly terminates TLS at its edge, so the app must trust the proxy for
+  # secure cookies and rate limiting to see the real client address.
+  TRUST_PROXY = "true"
+
+  # The browser treats the Netlify site and this API as different sites, so
+  # the refresh-token cookie has to be SameSite=None. The config layer only
+  # honours that on a secure cookie, which Fly's HTTPS provides.
+  COOKIE_SAME_SITE = "none"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  # Scale to zero when idle and wake on the next request. This is what keeps
+  # a low-traffic restaurant API inside the free allowance; the cost is a
+  # few seconds on the first request after a quiet spell.
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    grace_period = "15s"
+    interval = "30s"
+    method = "GET"
+    path = "/api/health"
+    timeout = "5s"
+
+# One machine, one volume. SQLite is a single file with a single writer, so
+# this service is deliberately not scaled horizontally.
+[mounts]
+  source = "data"
+  destination = "/data"

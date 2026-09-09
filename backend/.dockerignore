@@ -1,0 +1,12 @@
+# Keep the build context small and free of anything host-specific. The image
+# installs its own dependencies, and the database, uploads and secrets all
+# belong to the running machine's volume — never to the image.
+node_modules
+data
+uploads
+.env
+.env.*
+!.env.example
+tests
+coverage
+npm-debug.log*
