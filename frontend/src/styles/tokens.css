@@ -52,6 +52,11 @@
   --color-text-faint: #7a6454;
   --color-text-on-ink: #f3e7d7;
   --color-text-on-ink-muted: #c3b2a0;
+  /* Text sitting on the brand red. The on-ink pair cannot be reused there:
+     against #d02127 the muted tone falls to 2.60:1 and even the main one to
+     4.38:1. These two hold 5.07:1 and 4.55:1. */
+  --color-text-on-brand: #fff8ee;
+  --color-text-on-brand-muted: #f7ebdd;
 
   /* --- Borders / surfaces --------------------------------------------- */
   --color-border: #e4d5c0;

@@ -30,8 +30,8 @@ a.dashboard-stats__card:hover { border-color: var(--color-red-600); }
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3);
-  background: var(--color-ink);
-  color: var(--color-text-on-ink);
+  background: var(--color-red-brand);
+  color: var(--color-text-on-brand);
   padding: var(--space-4);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-4);

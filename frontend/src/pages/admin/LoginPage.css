@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-ink);
+  background: var(--color-red-brand);
   padding: var(--space-5);
 }
 .admin-login__panel {

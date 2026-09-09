@@ -5,13 +5,19 @@
  * recolored here — only displayed at different sizes.
  */
 export function Logo({ size = 40, withWordmark = true, dark = false }) {
+  // `size` may be a number of pixels or a CSS length such as a clamp(), which
+  // is how the brand panel scales the mark fluidly. The width/height
+  // attributes only accept numbers, so they're set only in that case; the
+  // inline style takes either.
+  const numericSize = typeof size === 'number' ? size : undefined;
+
   return (
     <span className="logo" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem' }}>
       <img
         src="/brand/logo.png"
         alt="4 Bros Food Square"
-        width={size}
-        height={size}
+        width={numericSize}
+        height={numericSize}
         style={{ width: size, height: size, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
       />
       {withWordmark && (
@@ -21,7 +27,7 @@ export function Logo({ size = 40, withWordmark = true, dark = false }) {
             fontWeight: 700,
             fontSize: '1.15rem',
             letterSpacing: '0.01em',
-            color: dark ? 'var(--color-text-on-ink)' : 'var(--color-text)',
+            color: dark ? 'var(--color-text-on-brand)' : 'var(--color-text)',
             lineHeight: 1.1,
           }}
         >
@@ -34,9 +40,10 @@ export function Logo({ size = 40, withWordmark = true, dark = false }) {
               fontSize: '0.6rem',
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              // Brand red is a light-background colour (2.53:1 on ink), so the
-              // dark footer/sidebar variant uses gold instead (7.75:1 on ink).
-              color: dark ? 'var(--color-gold)' : 'var(--color-red-600)',
+              // `dark` means "on the brand red" (the footer). Neither the deep
+              // red nor gold survives there — 2.5:1 and 2.25:1 — so it takes
+              // the cream calibrated for that ground.
+              color: dark ? 'var(--color-text-on-brand-muted)' : 'var(--color-red-600)',
             }}
           >
             Food Square

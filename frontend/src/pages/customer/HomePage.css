@@ -47,18 +47,59 @@
      stay opaque enough to hold the headline's contrast over any photo. */
   background: linear-gradient(rgba(208, 33, 39, 0.88), rgba(117, 23, 18, 0.92));
 }
-.hero__inner { position: relative; max-width: 46ch; }
+.hero__inner {
+  position: relative;
+  display: grid;
+  gap: var(--space-12);
+  align-items: center;
+}
 @media (min-width: 900px) {
-  .hero { padding-block: var(--space-24) var(--space-24); }
+  /* Copy left, brand panel right. The panel is given slightly less room so
+     the headline stays the first thing read. */
+  .hero__inner { grid-template-columns: 1.15fr 1fr; gap: var(--space-16); }
+  .hero { text-align: left; }
+  .hero__actions { justify-content: flex-start; }
+}
+.hero__copy { max-width: 46ch; margin-inline: auto; }
+@media (min-width: 900px) {
+  .hero__copy { margin-inline: 0; }
+}
+
+/* Brand panel ---------------------------------------------------------- */
+.hero__brand {
+  background: var(--color-cream);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  text-align: center;
+}
+/* Gold earns its place here: purely decorative, carries no text, and sits on
+   cream where it reads as a fine detail rather than a legibility problem. */
+.hero__brand-rule {
+  width: 3.5rem;
+  height: 1px;
+  background: var(--color-gold);
+}
+.hero__brand-line {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.45;
+  color: var(--color-text);
+  max-width: 22ch;
+  text-wrap: balance;
 }
 .hero__eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: var(--text-xs);
   font-weight: 700;
-  /* Not gold: gold manages only 2.1:1 on this red. */
-  color: var(--color-cream);
-  opacity: 0.9;
+  /* Not gold (2.1:1 on this red), and at full strength: an earlier opacity of
+     0.9 composited the cream down to 3.91:1, which axe caught. Warm white at
+     full opacity is 5.07:1, with room to spare at 12px bold. */
+  color: var(--color-text-on-brand);
   margin-bottom: var(--space-5);
 }
 .hero h1 {
@@ -140,8 +181,8 @@
 
 /* Homemade / approach ------------------------------------------------- */
 .approach-section {
-  background: var(--color-ink);
-  color: var(--color-text-on-ink);
+  background: var(--color-red-brand);
+  color: var(--color-text-on-brand);
   padding-block: var(--space-24);
 }
 .approach-section__inner {
@@ -160,19 +201,20 @@
   text-wrap: balance;
 }
 .approach-section p {
-  color: var(--color-text-on-ink-muted);
+  color: var(--color-text-on-brand-muted);
   font-size: var(--text-lg);
   line-height: 1.7;
   max-width: 46ch;
   margin-inline: auto;
 }
-/* A single hairline instead of an icon row — the one place gold appears on
-   a light-facing layout, and it carries no text so contrast is moot. */
+/* A single hairline instead of an icon row. Cream rather than gold: gold on
+   this red is 2.25:1 and effectively disappears. */
 .approach-section__inner::after {
   content: '';
   width: 3rem;
   height: 1px;
-  background: var(--color-gold);
+  background: var(--color-text-on-brand-muted);
+  opacity: 0.6;
   margin-inline: auto;
 }
 
@@ -203,7 +245,7 @@
 
 /* Order now band ------------------------------------------------------- */
 .cta-band {
-  background: var(--color-red-700);
+  background: var(--color-red-brand);
   color: var(--color-paper);
 }
 .cta-band__inner {

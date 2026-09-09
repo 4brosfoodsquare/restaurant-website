@@ -3,6 +3,7 @@ import { usePageTitle } from '../../hooks/usePageTitle.js';
 import { useApiQuery } from '../../hooks/useApiQuery.js';
 import { useSettings } from '../../context/SettingsContext.jsx';
 import { FoodImage } from '../../components/customer/FoodImage.jsx';
+import { Logo } from '../../components/shared/Logo.jsx';
 import { LoadingState, ErrorState } from '../../components/shared/StateViews.jsx';
 import './HomePage.css';
 
@@ -28,20 +29,31 @@ export default function HomePage() {
         style={heroImage ? { backgroundImage: `url(${heroImage})` } : undefined}
       >
         <div className="container hero__inner">
-          <p className="hero__eyebrow">Homemade food · Homemade masalas</p>
-          <h1>{settings?.tagline || 'Few dishes. Made with care.'}</h1>
-          <p className="hero__lead">
-            {settings?.description ||
-              'Biriyani, kabab and chilli chicken, cooked with masalas we make ourselves. A short menu, so every plate gets the attention it deserves.'}
-          </p>
-          <div className="hero__actions">
-            <Link to="/menu" className="btn btn-lg hero__primary">
-              Order Now
-            </Link>
-            <Link to="/menu" className="btn btn-outline btn-lg hero__secondary">
-              View Menu
-            </Link>
+          <div className="hero__copy">
+            <p className="hero__eyebrow">Homemade food · Homemade masalas</p>
+            <h1>{settings?.tagline || 'Few dishes. Made with care.'}</h1>
+            <p className="hero__lead">
+              {settings?.description ||
+                'Biriyani, kabab and chilli chicken, cooked with masalas we make ourselves. A short menu, so every plate gets the attention it deserves.'}
+            </p>
+            <div className="hero__actions">
+              <Link to="/menu" className="btn btn-lg hero__primary">
+                Order Now
+              </Link>
+              <Link to="/menu" className="btn btn-outline btn-lg hero__secondary">
+                View Menu
+              </Link>
+            </div>
           </div>
+
+          {/* Brand panel: the logo is the section, not decoration around it.
+              It scales fluidly rather than at fixed breakpoints so the mark
+              stays the dominant element from mobile through desktop. */}
+          <aside className="hero__brand">
+            <Logo size="clamp(9rem, 20vw, 15rem)" withWordmark={false} />
+            <span className="hero__brand-rule" />
+            <p className="hero__brand-line">Homemade food. Homemade masalas. Made with care.</p>
+          </aside>
         </div>
       </section>
 

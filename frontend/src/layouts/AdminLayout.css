@@ -10,8 +10,8 @@
   top: var(--space-3);
   right: var(--space-3);
   z-index: 60;
-  background: var(--color-ink);
-  color: var(--color-text-on-ink);
+  background: var(--color-red-brand);
+  color: var(--color-text-on-brand);
   border: none;
   border-radius: var(--radius-md);
   padding: var(--space-2) var(--space-3);
@@ -26,8 +26,8 @@
   position: fixed;
   inset: 0 auto 0 0;
   width: 260px;
-  background: var(--color-ink);
-  color: var(--color-text-on-ink);
+  background: var(--color-red-brand);
+  color: var(--color-text-on-brand);
   display: flex;
   flex-direction: column;
   padding: var(--space-5) var(--space-4);
@@ -46,11 +46,11 @@
   align-items: center;
   gap: var(--space-3);
   padding-bottom: var(--space-5);
-  border-bottom: 1px solid var(--color-ink-border);
+  border-bottom: 1px solid rgba(255, 248, 238, 0.25);
   margin-bottom: var(--space-5);
 }
 .admin-sidebar__brand strong { display: block; font-size: var(--text-sm); }
-.admin-sidebar__brand-subtitle { display: block; font-size: var(--text-xs); color: var(--color-text-on-ink-muted); }
+.admin-sidebar__brand-subtitle { display: block; font-size: var(--text-xs); color: var(--color-text-on-brand-muted); }
 
 .admin-sidebar nav ul { display: flex; flex-direction: column; gap: var(--space-1); flex: 1; }
 .admin-sidebar nav a {
@@ -61,16 +61,16 @@
   border-radius: var(--radius-md);
   font-weight: 600;
   font-size: var(--text-sm);
-  color: var(--color-text-on-ink-muted);
+  color: var(--color-text-on-brand-muted);
   min-height: 44px;
 }
-.admin-sidebar nav a:hover { background: var(--color-ink-soft); color: var(--color-text-on-ink); }
-.admin-sidebar nav a.active { background: var(--color-red-600); color: var(--color-ink); }
+.admin-sidebar nav a:hover { background: rgba(255, 248, 238, 0.14); color: var(--color-text-on-brand); }
+.admin-sidebar nav a.active { background: var(--color-paper); color: var(--color-red-700); }
 
 .admin-sidebar__user {
   margin-top: auto;
   padding-top: var(--space-4);
-  border-top: 1px solid var(--color-ink-border);
+  border-top: 1px solid rgba(255, 248, 238, 0.25);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,13 +78,13 @@
 }
 .admin-sidebar__user strong { display: block; font-size: var(--text-sm); }
 /* .btn-outline's default text color is calibrated for light backgrounds
-   (--color-text) — on this dark sidebar it was nearly invisible. */
+   (--color-text) — on this red sidebar it was nearly invisible. */
 .admin-sidebar__user .btn-outline {
-  color: var(--color-text-on-ink);
-  border-color: rgba(245, 238, 227, 0.4);
+  color: var(--color-text-on-brand);
+  border-color: rgba(255, 248, 238, 0.45);
 }
-.admin-sidebar__user .btn-outline:hover { background: rgba(245, 238, 227, 0.1); }
-.admin-sidebar__user span { display: block; font-size: var(--text-xs); color: var(--color-text-on-ink-muted); text-transform: capitalize; }
+.admin-sidebar__user .btn-outline:hover { background: rgba(255, 248, 238, 0.14); }
+.admin-sidebar__user span { display: block; font-size: var(--text-xs); color: var(--color-text-on-brand-muted); text-transform: capitalize; }
 
 .admin-main {
   flex: 1;
