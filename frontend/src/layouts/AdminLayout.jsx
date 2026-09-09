@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useRobotsMeta } from '../hooks/useRobotsMeta.js';
+import { Logo } from '../components/shared/Logo.jsx';
 import './AdminLayout.css';
 
 const NAV_ITEMS = [
@@ -40,7 +41,7 @@ export function AdminLayout() {
 
       <aside id="admin-sidebar" className={`admin-sidebar ${sidebarOpen ? 'admin-sidebar--open' : ''}`}>
         <div className="admin-sidebar__brand">
-          <span className="admin-sidebar__brand-mark">4B</span>
+          <Logo size={40} withWordmark={false} />
           <div>
             <strong>4 Bros Admin</strong>
             <span className="admin-sidebar__brand-subtitle">Restaurant Operations</span>
