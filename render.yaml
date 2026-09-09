@@ -1,0 +1,87 @@
+# Render Blueprint for the 4 Bros Food Square API.
+#
+# This describes the backend service so it can be created in one step rather
+# than by filling in a dozen fields by hand: New → Blueprint → pick this
+# repository. Render reads this file from the repository root.
+#
+# The frontend is NOT described here — it stays on Netlify, which serves the
+# static build. This file is only the long-running Node process that Netlify
+# cannot host: the API, the SQLite database and the uploaded menu photos.
+#
+# Two values are deliberately left blank (`sync: false`) because they cannot
+# be known until the services exist. Render will prompt for both while
+# creating the blueprint. See docs/DEPLOYMENT.md.
+
+services:
+  - type: web
+    name: 4bros-food-square-api
+    runtime: node
+    # Disks are only available on paid instance types. A disk is not optional
+    # here: the SQLite database and every uploaded dish photo live on it, and
+    # on an ephemeral filesystem both are wiped on each redeploy and each
+    # idle restart — losing every order taken since the last deploy.
+    plan: starter
+    region: singapore
+    rootDir: backend
+    buildCommand: npm ci
+    # Migrate and seed on every boot. Both are idempotent by design: the seed
+    # creates the owner account only when it is absent, so a changed password
+    # is never reset, and settings use ON CONFLICT DO NOTHING, so the details
+    # entered in Admin → Settings are never overwritten by placeholders.
+    startCommand: npm run db:migrate && npm run db:seed && npm start
+    healthCheckPath: /api/health
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        # better-sqlite3 13 requires Node 22 or newer.
+        value: "22"
+
+      # Database and uploads both live on the persistent disk above.
+      - key: DATABASE_FILE
+        value: /var/data/app.db
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+
+      # Render terminates TLS at its edge and forwards to the app, so the
+      # app must trust the proxy for secure cookies and rate limiting to see
+      # the real client address.
+      - key: TRUST_PROXY
+        value: "true"
+
+      # The browser treats the Netlify site and this API as different sites,
+      # so the refresh-token cookie has to be SameSite=None. The config layer
+      # only honours that on a secure cookie, which Render's HTTPS provides.
+      - key: COOKIE_SAME_SITE
+        value: none
+
+      # Generated once by Render, different from each other, and never seen
+      # by anyone. The server refuses to boot in production without strong
+      # values for both.
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+
+      # The exact origin of the Netlify site, scheme included and no trailing
+      # slash — e.g. https://4bros-food-square.netlify.app
+      # Anything not listed here is refused by CORS.
+      - key: CORS_ORIGINS
+        sync: false
+
+      # This service's own public URL, used to build absolute image URLs for
+      # uploaded dish photos — e.g. https://4bros-food-square-api.onrender.com
+      # Render shows it once the service is created.
+      - key: PUBLIC_API_URL
+        sync: false
+
+      # The first owner login. Set a real password here; it is used only if
+      # the account does not already exist.
+      - key: SEED_ADMIN_EMAIL
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false

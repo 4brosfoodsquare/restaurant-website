@@ -3,6 +3,11 @@
 # This file makes the repository *ready* for Netlify — it does not deploy
 # anything by itself. Deployment happens only when a Netlify site is
 # explicitly connected to this repo and a build is explicitly triggered.
+#
+# It lives at the repository ROOT, not in frontend/, because that is where
+# Netlify looks when a repository is imported through the UI. `base` below
+# points it at the frontend; `publish` is resolved relative to that base, so
+# the build output it serves is frontend/dist.
 
 [build]
   base = "frontend"
