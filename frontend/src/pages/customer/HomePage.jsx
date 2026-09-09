@@ -69,7 +69,9 @@ export default function HomePage() {
               {signatureDishes.map((dish) => (
                 <Link key={dish.id} to={`/menu/${dish.slug}`} className="signature-card">
                   <div className="signature-card__media">
-                    <FoodImage src={dish.imageUrl} label={dish.name} />
+                    {/* Red plate while there's no photo; a real photo replaces
+                        it entirely and crops to fill the same well. */}
+                    <FoodImage src={dish.imageUrl} label={dish.name} className="food-image--on-brand" />
                   </div>
                   <div className="signature-card__body">
                     <h3>{dish.name}</h3>

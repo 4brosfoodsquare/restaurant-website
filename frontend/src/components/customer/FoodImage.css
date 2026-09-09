@@ -33,12 +33,19 @@
   color: var(--color-text-muted);
 }
 
-/* On the dark hero the cream plate would glare, so it inverts to sit in the
-   section rather than punch a hole in it. */
-.food-image--on-ink.food-image--placeholder {
-  background: radial-gradient(120% 100% at 50% 0%, var(--color-ink-soft) 0%, var(--color-ink) 100%);
+/* Brand-red plate, used where a missing photo would otherwise leave a large
+   pale block — the homepage signature cards. Deep red rather than the vivid
+   brand fill: this sits directly above a cream content area, and the deeper
+   tone reads as a deliberate photo well instead of a flat swatch. Cream, not
+   gold, for the lettering and rules — gold is 3.06:1 here, cream 6.20:1. */
+.food-image--on-brand.food-image--placeholder {
+  background: var(--color-red-600);
 }
-.food-image--on-ink .food-image__label { color: var(--color-text-on-ink-muted); }
+.food-image--on-brand .food-image__label { color: var(--color-text-on-brand); }
+.food-image--on-brand .food-image__rule {
+  background: var(--color-text-on-brand);
+  opacity: 0.55;
+}
 
 /* Compact frames carry the rules but no lettering (see FoodImage.jsx), so
    they need less breathing room than the labelled variant. */
