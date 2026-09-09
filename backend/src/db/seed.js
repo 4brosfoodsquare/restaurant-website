@@ -50,8 +50,8 @@ async function seed() {
     address_line2: '[Area, City — placeholder]',
     address_postcode: '000000',
     hours: JSON.stringify({
-      mon: '11:00-22:30', tue: '11:00-22:30', wed: '11:00-22:30', thu: '11:00-22:30',
-      fri: '11:00-23:00', sat: '11:00-23:00', sun: '11:00-23:00',
+      mon: '18:00-23:00', tue: '18:00-23:00', wed: '18:00-23:00', thu: '18:00-23:00',
+      fri: '18:00-23:00', sat: '18:00-23:00', sun: '18:00-23:00',
     }),
     order_types_enabled: JSON.stringify(['pickup', 'delivery']),
     delivery_fee_minor: '0',
