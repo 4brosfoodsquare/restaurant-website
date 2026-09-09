@@ -4,8 +4,8 @@ import './OrderSummaryCard.css';
 
 export function OrderSummaryCard({ order }) {
   return (
-    <div className="order-summary-card card">
-      <div className="order-summary-card__header">
+    <div className="order-summary-card card card--brand">
+      <div className="order-summary-card__header card__header">
         <div>
           <span className="order-summary-card__label">Order</span>
           <h2>{order.reference}</h2>
@@ -15,9 +15,10 @@ export function OrderSummaryCard({ order }) {
         </span>
       </div>
 
-      <div className="order-summary-card__stepper">
-        <OrderStatusStepper status={order.status} />
-      </div>
+      <div className="card__body">
+        <div className="order-summary-card__stepper">
+          <OrderStatusStepper status={order.status} />
+        </div>
 
       <ul className="order-summary-card__items">
         {order.items.map((item) => (
@@ -71,6 +72,7 @@ export function OrderSummaryCard({ order }) {
           {order.addressLine2 ? `, ${order.addressLine2}` : ''}, {order.addressCity} {order.addressPostcode}
         </p>
       )}
+      </div>
     </div>
   );
 }

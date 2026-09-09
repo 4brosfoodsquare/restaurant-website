@@ -24,8 +24,7 @@
   margin-bottom: var(--space-16);
 }
 @media (min-width: 768px) { .about-page__pillars { grid-template-columns: repeat(3, 1fr); } }
-.about-page__pillar { padding: var(--space-6); }
-.about-page__pillar h2 { font-size: var(--text-2xl); margin-bottom: var(--space-3); }
+/* Padding and heading styling come from .card--brand / .card__header. */
 .about-page__pillar p { color: var(--color-text-muted); }
 
 .about-page__cta { text-align: center; }

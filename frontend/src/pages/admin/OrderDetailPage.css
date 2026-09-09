@@ -54,8 +54,8 @@
 }
 @media (min-width: 900px) { .order-detail-page__grid { grid-template-columns: repeat(3, 1fr); } }
 
-.order-detail-page__panel { padding: var(--space-5); }
-.order-detail-page__panel h2 { font-size: var(--text-lg); margin-bottom: var(--space-4); }
+/* Padding and heading styling now come from .card--brand / .card__header. */
+.order-detail-page__panel { display: flex; flex-direction: column; }
 
 .order-detail-page__items { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
 .order-detail-page__items li { display: flex; justify-content: space-between; font-size: var(--text-sm); }
@@ -69,5 +69,8 @@
 .order-detail-page__history { display: flex; flex-direction: column; gap: var(--space-4); }
 .order-detail-page__history li { font-size: var(--text-sm); }
 .order-detail-page__history li > span:first-child { font-weight: 700; }
-.order-detail-page__history li > span:last-child { display: block; color: var(--color-text-muted); font-size: var(--text-xs); }
+/* nth-of-type, not :last-child — an entry that also carries a note ends with
+   the <p>, so :last-child stopped matching the timestamp and it ran into the
+   status on one line ("New9/9/2026, 7:26 AM"). */
+.order-detail-page__history li > span:nth-of-type(2) { display: block; color: var(--color-text-muted); font-size: var(--text-xs); }
 .order-detail-page__history li p { margin-top: var(--space-1); color: var(--color-text-muted); }

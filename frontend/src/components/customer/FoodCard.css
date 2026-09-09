@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(27, 18, 14, 0.62);
-  color: #fff;
+  color: var(--color-paper);
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;

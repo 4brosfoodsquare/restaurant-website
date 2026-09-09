@@ -62,7 +62,7 @@
   padding-inline: 0.25rem;
   border-radius: var(--radius-pill);
   background: var(--color-red-600);
-  color: #fff;
+  color: var(--color-paper);
   font-size: 0.65rem;
   font-weight: 700;
   display: inline-flex;

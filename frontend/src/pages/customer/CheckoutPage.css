@@ -34,7 +34,7 @@
 
 .checkout-form__unavailable {
   background: var(--color-warning-bg);
-  color: #8a5613;
+  color: var(--color-warning);
   padding: var(--space-4);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);

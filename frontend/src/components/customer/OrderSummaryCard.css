@@ -1,13 +1,19 @@
-.order-summary-card { padding: var(--space-6); max-width: 560px; }
+/* Padding comes from .card--brand / .card__body. */
+.order-summary-card { max-width: 560px; }
 .order-summary-card__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-3);
-  margin-bottom: var(--space-6);
 }
-.order-summary-card__label { font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
-.order-summary-card__header h2 { font-size: var(--text-2xl); font-family: var(--font-display); }
+/* On the red header the muted grey label would sit at ~2:1. */
+.order-summary-card__label {
+  font-size: var(--text-xs);
+  color: var(--color-text-on-brand-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.order-summary-card__header h2 { font-size: var(--text-2xl); font-family: var(--font-display); color: var(--color-text-on-brand); }
 .order-summary-card__type { flex-shrink: 0; text-transform: capitalize; }
 
 .order-summary-card__stepper { margin-bottom: var(--space-6); }

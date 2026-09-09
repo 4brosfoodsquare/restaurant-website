@@ -33,9 +33,9 @@ export default function AboutPage() {
       {dishes.status === 'success' && (
         <div className="about-page__pillars">
           {dishes.data.map((dish) => (
-            <div key={dish.id} className="card about-page__pillar">
-              <h2>{dish.name}</h2>
-              <p>{dish.description}</p>
+            <div key={dish.id} className="card card--brand about-page__pillar">
+              <h2 className="card__header">{dish.name}</h2>
+              <p className="card__body">{dish.description}</p>
             </div>
           ))}
         </div>

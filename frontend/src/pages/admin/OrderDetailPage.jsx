@@ -109,8 +109,9 @@ export default function OrderDetailPage() {
       )}
 
       <div className="order-detail-page__grid">
-        <div className="card order-detail-page__panel">
-          <h2>Items</h2>
+        <div className="card card--brand order-detail-page__panel">
+          <h2 className="card__header">Items</h2>
+          <div className="card__body">
           <ul className="order-detail-page__items">
             {order.items.map((item) => (
               <li key={item.id}>
@@ -127,11 +128,12 @@ export default function OrderDetailPage() {
             {order.deliveryFeeMinor > 0 && <div><span>Delivery fee</span><span>{formatMoney(order.deliveryFeeMinor)}</span></div>}
             <div className="order-detail-page__total-row"><span>Total</span><span>{formatMoney(order.totalMinor)}</span></div>
           </div>
+          </div>
         </div>
 
-        <div className="card order-detail-page__panel">
-          <h2>Customer</h2>
-          <dl className="order-detail-page__meta">
+        <div className="card card--brand order-detail-page__panel">
+          <h2 className="card__header">Customer</h2>
+          <dl className="card__body order-detail-page__meta">
             <div><dt>Name</dt><dd>{order.customerName}</dd></div>
             <div><dt>Phone</dt><dd><a href={`tel:${order.customerPhone}`}>{order.customerPhone}</a></dd></div>
             {order.customerEmail && <div><dt>Email</dt><dd>{order.customerEmail}</dd></div>}
@@ -161,9 +163,9 @@ export default function OrderDetailPage() {
           </dl>
         </div>
 
-        <div className="card order-detail-page__panel">
-          <h2>History</h2>
-          <ul className="order-detail-page__history">
+        <div className="card card--brand order-detail-page__panel">
+          <h2 className="card__header">History</h2>
+          <ul className="card__body order-detail-page__history">
             {order.statusHistory.map((entry, index) => (
               <li key={index}>
                 <span className="dashboard-table__capitalize">{entry.toStatus}</span>

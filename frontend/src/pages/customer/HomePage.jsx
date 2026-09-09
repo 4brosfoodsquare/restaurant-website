@@ -37,7 +37,7 @@ export default function HomePage() {
                 'Biriyani, kabab and chilli chicken, cooked with masalas we make ourselves. A short menu, so every plate gets the attention it deserves.'}
             </p>
             <div className="hero__actions">
-              <Link to="/menu" className="btn btn-lg hero__primary">
+              <Link to="/menu" className="btn btn-on-brand btn-lg">
                 Order Now
               </Link>
               <Link to="/menu" className="btn btn-outline btn-lg hero__secondary">
@@ -114,7 +114,7 @@ export default function HomePage() {
       <section className="cta-band">
         <div className="container cta-band__inner">
           <h2>Ready when you are.</h2>
-          <Link to="/menu" className="btn btn-primary btn-lg">
+          <Link to="/menu" className="btn btn-on-brand btn-lg">
             Order Now
           </Link>
         </div>
@@ -139,9 +139,9 @@ export default function HomePage() {
               </p>
             )}
           </div>
-          <div className="hours-card card">
-            <h3>Opening Hours</h3>
-            <ul>
+          <div className="hours-card card card--brand">
+            <h3 className="card__header">Opening Hours</h3>
+            <ul className="card__body">
               {settings?.hours &&
                 Object.entries(DAY_LABELS).map(([key, label]) => (
                   <li key={key}>

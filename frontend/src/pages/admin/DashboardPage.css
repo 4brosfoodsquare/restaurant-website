@@ -59,7 +59,7 @@ a.dashboard-stats__card:hover {
   border-radius: var(--radius-md);
   margin-bottom: var(--space-4);
 }
-.dashboard-alert--warning { background: var(--color-warning-bg); color: #8a5613; }
+.dashboard-alert--warning { background: var(--color-warning-bg); color: var(--color-warning); }
 
 .dashboard-page__recent { margin-top: var(--space-8); }
 .dashboard-page__recent-header {

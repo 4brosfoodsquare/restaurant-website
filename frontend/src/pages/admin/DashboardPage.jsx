@@ -73,7 +73,7 @@ export default function DashboardPage() {
       {newCount > 0 && (
         <div className="dashboard-alert" role="alert">
           <strong>{newCount} new order{newCount === 1 ? '' : 's'}</strong> waiting to be accepted.
-          <Link to="/admin/orders?status=new" className="btn btn-dark btn-sm">
+          <Link to="/admin/orders?status=new" className="btn btn-on-brand btn-sm">
             Review Now
           </Link>
         </div>
