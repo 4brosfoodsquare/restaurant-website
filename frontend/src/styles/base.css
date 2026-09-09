@@ -141,17 +141,17 @@ p { margin: 0; }
   box-shadow: var(--shadow-sm);
 }
 
-/* Branded card: a deep-red header block over a cream body — the same
-   structure as the homepage dish cards and the dashboard stat tiles,
-   generalised so any card with a heading can adopt it without one-off CSS.
-   Deep red rather than the vivid brand fill, since these headers sit
-   directly above cream content. Cream lettering reads 6.20:1 on it. */
+/* Branded card: a red header block over a cream body — the same structure as
+   the homepage dish cards and the dashboard stat tiles, generalised so any
+   card with a heading can adopt it without one-off CSS. It takes the one
+   brand fill, so a card header, a stat tile, the sidebar and the hero are all
+   the same red. Warm white lettering reads 5.07:1 on it. */
 .card--brand {
   padding: 0;
   overflow: hidden;
 }
 .card--brand > .card__header {
-  background: var(--color-red-600);
+  background: var(--color-red-brand);
   color: var(--color-text-on-brand);
   font-family: var(--font-display);
   font-size: var(--text-lg);

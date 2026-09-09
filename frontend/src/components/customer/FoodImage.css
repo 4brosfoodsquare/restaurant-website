@@ -5,15 +5,14 @@
   object-fit: cover;
 }
 
-/* The branded stand-in shown wherever a dish has no photo yet. Deep red
-   rather than the vivid brand fill: these wells sit directly above cream
-   content, where the darker tone reads as a photo area instead of a flat
-   swatch. */
+/* The branded stand-in shown wherever a dish has no photo yet. It takes the
+   one brand fill, the same red as the hero above it and the card header
+   beside it. */
 .food-image--placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-red-600);
+  background: var(--color-red-brand);
 }
 
 .food-image__rule {

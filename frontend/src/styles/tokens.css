@@ -24,17 +24,22 @@
   --color-cream-deep: #efe0cd;
   --color-paper: #fff8ee;
 
-  /* Red splits by job, because one red cannot do both well:
-       --color-red-brand is the vivid signage red, for FILLS — the hero, the
-         primary button, the order band. Warm white reads 5.07:1 on it and
-         cream 4.55:1, so both the headline and the body copy that sit there
-         clear AA with headroom.
-       --color-red-600 is the deeper red for TEXT and borders on light
-         backgrounds (6.20:1 on cream). The vivid red manages only 4.55:1
-         there, too thin for the small bold links that use it.
-     Anything brighter fails: at #E31E25 warm white is already 4.45:1, and a
-     full pillar-box red drops it to 4.16:1. This is the most vivid the
-     palette goes without costing legibility. */
+  /* --color-red-brand is THE red. Every filled brand surface uses it and
+     nothing else: the hero, the footer, the admin sidebar, every card header,
+     every dish image well, every dashboard stat tile, the primary button.
+     One red, so a block on one page matches a block on any other. Warm white
+     reads 5.07:1 on it and cream 4.55:1, so headline and body copy sitting on
+     it both clear AA.
+
+     The darker shades are not alternative brand reds — they are jobs the
+     vivid red cannot do:
+       --color-red-600 for red TEXT and borders on cream (6.20:1, against the
+         vivid red's 4.55:1, which is too thin for the small bold links).
+       --color-red-700 for hover and pressed states, which have to darken
+         against the fill to register as a change at all.
+     Anything brighter than the brand red fails: at #E31E25 warm white is
+     already 4.45:1, and a full pillar-box red drops it to 4.16:1. This is the
+     most vivid the palette goes without costing legibility. */
   --color-red-brand: #d02127;
   --color-red-600: #a8201a;
   --color-red-700: #751712;

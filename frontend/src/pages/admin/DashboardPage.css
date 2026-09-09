@@ -28,7 +28,7 @@ a.dashboard-stats__card:hover {
   transform: translateY(-2px);
 }
 .dashboard-stats__value {
-  background: var(--color-red-600);
+  background: var(--color-red-brand);
   color: var(--color-text-on-brand);
   font-size: var(--text-3xl);
   font-weight: 700;
@@ -42,11 +42,10 @@ a.dashboard-stats__card:hover {
   font-weight: 600;
   padding: var(--space-3) var(--space-4);
 }
-/* New orders need to stand out from the other five at a glance, so the alert
-   tile takes the vivid brand red against their deeper one, plus a matching
-   border. (The banner below the row is still the primary signal.) */
+/* Every tile carries the same brand red, so the alert tile can no longer set
+   itself apart by shade. It does it with the border instead — red against the
+   others' cream. (The banner below the row is still the primary signal.) */
 .dashboard-stats__card--alert { border-color: var(--color-red-brand); }
-.dashboard-stats__card--alert .dashboard-stats__value { background: var(--color-red-brand); }
 
 .dashboard-alert {
   display: flex;
