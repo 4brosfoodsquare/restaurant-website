@@ -56,7 +56,7 @@
   cursor: pointer;
   min-height: 44px;
 }
-.order-type-toggle label.active { border-color: var(--color-amber-500); background: var(--color-amber-50); }
+.order-type-toggle label.active { border-color: var(--color-red-600); background: var(--color-warning-bg); }
 
 .checkout-form__payment-note {
   font-size: var(--text-sm);

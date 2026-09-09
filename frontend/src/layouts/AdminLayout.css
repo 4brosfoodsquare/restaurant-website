@@ -65,7 +65,7 @@
   min-height: 44px;
 }
 .admin-sidebar nav a:hover { background: var(--color-ink-soft); color: var(--color-text-on-ink); }
-.admin-sidebar nav a.active { background: var(--color-amber-500); color: var(--color-ink); }
+.admin-sidebar nav a.active { background: var(--color-red-600); color: var(--color-ink); }
 
 .admin-sidebar__user {
   margin-top: auto;
@@ -105,5 +105,5 @@
 .dashboard-table th, .dashboard-table td { text-align: left; padding: var(--space-3) var(--space-4); white-space: nowrap; }
 .dashboard-table th { color: var(--color-text-muted); font-weight: 600; border-bottom: 1px solid var(--color-border); }
 .dashboard-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--color-border); }
-.dashboard-table a { font-weight: 700; color: var(--color-amber-text); }
+.dashboard-table a { font-weight: 700; color: var(--color-red-600); }
 .dashboard-table__capitalize { text-transform: capitalize; }

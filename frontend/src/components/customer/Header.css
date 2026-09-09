@@ -34,7 +34,7 @@
   .site-header__nav--desktop a:hover { color: var(--color-text); }
   .site-header__nav--desktop a.active {
     color: var(--color-text);
-    border-bottom-color: var(--color-amber-500);
+    border-bottom-color: var(--color-red-600);
   }
 }
 
@@ -118,7 +118,7 @@
   display: flex;
   align-items: center;
 }
-.site-header__nav--mobile a.active { color: var(--color-amber-text); }
+.site-header__nav--mobile a.active { color: var(--color-red-600); }
 @media (min-width: 960px) {
   .site-header__nav--mobile { display: none; }
 }

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../hooks/usePageTitle.js';
 import { useCart } from '../../context/CartContext.jsx';
 import { formatMoney } from '../../lib/money.js';
+import { FoodImage } from '../../components/customer/FoodImage.jsx';
 import { EmptyState } from '../../components/shared/StateViews.jsx';
 import './CartPage.css';
 
@@ -34,7 +35,7 @@ export default function CartPage() {
           {items.map((line) => (
             <li key={line.menuItemId} className="cart-line card">
               <div className="cart-line__media" aria-hidden="true">
-                {line.imageUrl ? <img src={line.imageUrl} alt="" loading="lazy" /> : <span>🍽️</span>}
+                <FoodImage src={line.imageUrl} compact />
               </div>
               <div className="cart-line__info">
                 <Link to={`/menu/${line.slug}`}>{line.name}</Link>

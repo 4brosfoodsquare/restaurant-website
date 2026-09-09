@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { formatMoney } from '../../lib/money.js';
 import { DIET_LABELS } from '../../lib/dietLabels.js';
 import { useCart } from '../../context/CartContext.jsx';
+import { FoodImage } from './FoodImage.jsx';
 import './FoodCard.css';
 
 export function FoodCard({ item }) {
@@ -15,13 +16,9 @@ export function FoodCard({ item }) {
           discernible name for screen readers, and with it present too we'd
           just be a second identical stop before that one. */}
       <Link to={`/menu/${item.slug}`} className="food-card__media" aria-hidden="true" tabIndex={-1}>
-        {item.imageUrl ? (
-          <img src={item.imageUrl} alt="" loading="lazy" />
-        ) : (
-          <div className="food-card__media-placeholder" aria-hidden="true">
-            🍽️
-          </div>
-        )}
+        {/* No label on the plate here: the dish title sits directly beneath
+            it, so printing the name inside the image would just repeat it. */}
+        <FoodImage src={item.imageUrl} compact />
         {unavailable && <span className="food-card__sold-out">Sold Out</span>}
         {!unavailable && item.isPopular && <span className="badge badge-amber food-card__ribbon">Popular</span>}
       </Link>

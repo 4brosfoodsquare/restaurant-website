@@ -1,6 +1,6 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { useIsolatedDatabase } from './helpers.js';
+import { useIsolatedDatabase, createTestMenuItems, TEST_MENU_ITEMS } from './helpers.js';
 
 useIsolatedDatabase();
 
@@ -22,6 +22,7 @@ async function loginAs(email, password) {
 before(async () => {
   runMigrations({ silent: true });
   await seed();
+  createTestMenuItems(getDb());
   app = createApp();
 
   ownerToken = await loginAs('owner@example.com', 'TestPassword!123');
@@ -42,7 +43,7 @@ after(() => {
 test('public menu listing returns active+available items from active categories with category info', async () => {
   const res = await request(app).get('/api/menu');
   assert.equal(res.status, 200);
-  assert.ok(res.body.data.length >= 11);
+  assert.equal(res.body.data.length, TEST_MENU_ITEMS.length);
   const first = res.body.data[0];
   assert.ok('priceMinor' in first);
   assert.ok('categorySlug' in first);

@@ -34,10 +34,9 @@ export function Logo({ size = 40, withWordmark = true, dark = false }) {
               fontSize: '0.6rem',
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              // amber-text is calibrated for light backgrounds (cream/paper);
-              // on the dark footer/sidebar variant it'd fail contrast, so use
-              // amber-400 there instead (7.7:1+ on ink).
-              color: dark ? 'var(--color-amber-400)' : 'var(--color-amber-text)',
+              // Brand red is a light-background colour (2.53:1 on ink), so the
+              // dark footer/sidebar variant uses gold instead (7.75:1 on ink).
+              color: dark ? 'var(--color-gold)' : 'var(--color-red-600)',
             }}
           >
             Food Square

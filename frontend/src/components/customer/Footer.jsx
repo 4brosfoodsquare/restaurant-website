@@ -14,7 +14,7 @@ export function Footer() {
       <div className="container site-footer__grid">
         <div className="site-footer__brand">
           <Logo size={40} dark />
-          <p>{settings?.description || 'A specialist Indian non-vegetarian kitchen — biriyani, kabab and chilli chicken, made fresh.'}</p>
+          <p>{settings?.description || 'Biriyani, kabab and chilli chicken, cooked with masalas we make ourselves.'}</p>
           {(settings?.socialInstagram || settings?.socialFacebook) && (
             <div className="site-footer__social">
               {settings?.socialInstagram && (

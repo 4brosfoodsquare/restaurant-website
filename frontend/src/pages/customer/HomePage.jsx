@@ -2,16 +2,9 @@ import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../hooks/usePageTitle.js';
 import { useApiQuery } from '../../hooks/useApiQuery.js';
 import { useSettings } from '../../context/SettingsContext.jsx';
-import { FoodCard } from '../../components/customer/FoodCard.jsx';
+import { FoodImage } from '../../components/customer/FoodImage.jsx';
 import { LoadingState, ErrorState } from '../../components/shared/StateViews.jsx';
 import './HomePage.css';
-
-const WHY_CHOOSE_US = [
-  { icon: '🔥', title: 'Cooked to order', text: 'Every biriyani, kabab and chilli chicken is made fresh after you order — not reheated from a steam tray.' },
-  { icon: '🌶️', title: 'Signature spice blends', text: 'Recipes built around slow-layered biriyani masala and char-grilled marinades, not shortcuts.' },
-  { icon: '🛵', title: 'Pickup & delivery', text: 'Order ahead for quick pickup, or have it delivered hot to your door.' },
-  { icon: '👨‍🍳', title: 'Family-run kitchen', text: 'A small, focused menu we know well — rather than trying to do everything.' },
-];
 
 const DAY_LABELS = { mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu', fri: 'Fri', sat: 'Sat', sun: 'Sun' };
 
@@ -19,35 +12,43 @@ export default function HomePage() {
   usePageTitle();
   const { settings } = useSettings();
   const categories = useApiQuery('/api/categories');
-  const popular = useApiQuery('/api/menu?popular=true');
 
   const signatureCategories = (categories.data ?? []).filter((c) => c.isSignature);
+  // The hero frame borrows the first signature photo the owner has uploaded,
+  // so the page gains real food imagery the moment one exists — without
+  // needing a separate hero-image setting to be filled in first.
+  const heroImage = signatureCategories.find((c) => c.imageUrl)?.imageUrl;
 
   return (
     <>
       <section className="hero">
         <div className="container hero__inner">
-          <p className="hero__eyebrow">Specialist Indian Non-Vegetarian Kitchen</p>
-          <h1>{settings?.tagline || 'Biriyani. Kabab. Chilli Chicken.'}</h1>
-          <p className="hero__lead">
-            {settings?.description ||
-              'A specialist Indian non-vegetarian kitchen built around three things we do better than anyone else: slow-cooked biriyani, char-grilled kababs and wok-tossed chilli chicken.'}
-          </p>
-          <div className="hero__actions">
-            <Link to="/menu" className="btn btn-primary btn-lg">
-              Order Now
-            </Link>
-            <Link to="/menu" className="btn btn-outline btn-lg hero__secondary">
-              View Full Menu
-            </Link>
+          <div className="hero__copy">
+            <p className="hero__eyebrow">Homemade food · Homemade masalas</p>
+            <h1>{settings?.tagline || 'Few dishes. Made with care.'}</h1>
+            <p className="hero__lead">
+              {settings?.description ||
+                'Biriyani, kabab and chilli chicken, cooked with masalas we make ourselves. A short menu, so every plate gets the attention it deserves.'}
+            </p>
+            <div className="hero__actions">
+              <Link to="/menu" className="btn btn-primary btn-lg">
+                Order Now
+              </Link>
+              <Link to="/menu" className="btn btn-outline btn-lg hero__secondary">
+                View Menu
+              </Link>
+            </div>
+          </div>
+          <div className="hero__media">
+            <FoodImage src={heroImage} label="4 Bros Food Square" eager />
           </div>
         </div>
       </section>
 
       <section className="section signature-section">
         <div className="container">
-          <h2 className="section__title">Our Signatures</h2>
-          <p className="section__subtitle">The three dishes this kitchen is built around.</p>
+          <h2 className="section__title">What We Cook</h2>
+          <p className="section__subtitle">Three dishes. That is the whole menu, and that is on purpose.</p>
 
           {categories.status === 'loading' && <LoadingState label="Loading menu…" />}
           {categories.status === 'error' && <ErrorState onRetry={categories.refetch} />}
@@ -55,13 +56,13 @@ export default function HomePage() {
             <div className="signature-grid">
               {signatureCategories.map((cat) => (
                 <Link key={cat.id} to={`/menu?category=${cat.slug}`} className="signature-card">
-                  <div className="signature-card__media" aria-hidden="true">
-                    {cat.imageUrl ? <img src={cat.imageUrl} alt="" loading="lazy" /> : <span>🍛</span>}
+                  <div className="signature-card__media">
+                    <FoodImage src={cat.imageUrl} label={cat.name} />
                   </div>
                   <div className="signature-card__body">
                     <h3>{cat.name}</h3>
                     <p>{cat.description}</p>
-                    <span className="signature-card__link">Explore {cat.name} →</span>
+                    <span className="signature-card__link">See {cat.name}</span>
                   </div>
                 </Link>
               ))}
@@ -70,64 +71,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section why-section">
-        <div className="container">
-          <h2 className="section__title">Why 4 Bros</h2>
-          <div className="why-grid">
-            {WHY_CHOOSE_US.map((item) => (
-              <div key={item.title} className="why-card">
-                <span className="why-card__icon" aria-hidden="true">{item.icon}</span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section popular-section">
-        <div className="container">
-          <div className="section__header-row">
-            <div>
-              <h2 className="section__title">Popular Right Now</h2>
-              <p className="section__subtitle">Customer favourites from across the menu.</p>
-            </div>
-            <Link to="/menu" className="btn btn-outline btn-sm">
-              View Full Menu
-            </Link>
-          </div>
-
-          {popular.status === 'loading' && <LoadingState label="Loading popular dishes…" />}
-          {popular.status === 'error' && <ErrorState onRetry={popular.refetch} />}
-          {popular.status === 'success' && popular.data.length === 0 && (
-            <p className="section__empty">No popular dishes marked yet — check back soon.</p>
-          )}
-          {popular.status === 'success' && popular.data.length > 0 && (
-            <div className="food-grid">
-              {popular.data.slice(0, 8).map((item) => (
-                <FoodCard key={item.id} item={item} />
-              ))}
-            </div>
-          )}
+      <section className="approach-section">
+        <div className="container approach-section__inner">
+          <h2>Made at home. Served with pride.</h2>
+          <p>
+            Our masalas are made in our own kitchen, not bought in. That is the difference you
+            taste in every plate we send out.
+          </p>
         </div>
       </section>
 
       <section className="section about-section">
-        <div className="container about-section__inner">
-          <div>
-            <h2 className="section__title">About {settings?.restaurantName || '4 Bros Food Square'}</h2>
-            <p>{settings?.description}</p>
+        <div className="container">
+          <div className="about-section__inner">
+            <h2 className="section__title">A Focused Kitchen</h2>
+            <p>
+              We are a small kitchen with a short menu. Biriyani, kabab and chilli chicken — three
+              things we make properly, with our own homemade masalas, rather than a long list we
+              cannot do justice.
+            </p>
             <Link to="/about" className="btn btn-outline">
-              Our Story
+              Read Our Story
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="cta-band">
+        <div className="container cta-band__inner">
+          <h2>Ready when you are.</h2>
+          <Link to="/menu" className="btn btn-primary btn-lg">
+            Order Now
+          </Link>
         </div>
       </section>
 
       <section className="section location-section">
         <div className="container location-grid">
           <div>
-            <h2 className="section__title">Visit or Order From Us</h2>
+            <h2 className="section__title">Find Us</h2>
             {settings?.addressLine1 && (
               <p className="location-address">
                 {settings.addressLine1}
@@ -155,15 +137,6 @@ export default function HomePage() {
                 ))}
             </ul>
           </div>
-        </div>
-      </section>
-
-      <section className="cta-band">
-        <div className="container cta-band__inner">
-          <h2>Hungry already?</h2>
-          <Link to="/menu" className="btn btn-primary btn-lg">
-            Order Now
-          </Link>
         </div>
       </section>
     </>

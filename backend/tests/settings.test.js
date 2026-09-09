@@ -1,6 +1,6 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { useIsolatedDatabase } from './helpers.js';
+import { useIsolatedDatabase, createTestMenuItems } from './helpers.js';
 
 useIsolatedDatabase();
 
@@ -22,6 +22,7 @@ async function loginAs(email, password) {
 before(async () => {
   runMigrations({ silent: true });
   await seed();
+  createTestMenuItems(getDb());
   app = createApp();
 
   ownerToken = await loginAs('owner@example.com', 'TestPassword!123');

@@ -1,55 +1,59 @@
 /**
  * Design tokens for 4 Bros Food Square.
  *
- * Palette is built from the restaurant's own logo: a warm near-black disc,
- * a white ring, a red outer edge, and an amber/orange oil-lamp flame. That
- * gives us a dark "ink" for headers/footers and dark sections, a red accent
- * for emphasis, and an amber accent for the primary "Order Now" action and
- * warm highlights — colors that also happen to flatter biriyani, grilled
- * kabab and chilli chicken photography rather than fighting it.
+ * Deep red is the brand. The supporting palette — dark brown, cream, warm
+ * white, and a restrained gold accent — exists to give that red room to
+ * breathe rather than to compete with it. Backgrounds stay warm and light
+ * so food photography carries the page; dark sections are used sparingly
+ * for contrast.
+ *
+ * Two contrast rules the palette enforces (measured, not assumed):
+ *   - Gold is a DARK-SECTION colour only. On warm white it lands at
+ *     2.25:1 and on cream 2.02:1 — far below AA. On ink it's 7.75:1.
+ *     Use it on light backgrounds only as a non-text hairline/rule.
+ *   - Red is a LIGHT-BACKGROUND colour only. On ink it's 2.53:1. Dark
+ *     sections use cream or gold for emphasis instead.
  */
 :root {
   /* --- Brand core -------------------------------------------------- */
-  --color-ink: #1c1712;
-  --color-ink-soft: #2b2119;
-  --color-ink-border: #3c2f24;
+  --color-ink: #1b120e;
+  --color-ink-soft: #2a1d16;
+  --color-ink-border: #3a2a20;
 
-  --color-cream: #faf5ec;
-  --color-cream-deep: #f2e9d8;
-  --color-paper: #fffdf9;
+  --color-cream: #f7ebdd;
+  --color-cream-deep: #efe0cd;
+  --color-paper: #fff8ee;
 
-  --color-red-600: #a8291f;
-  --color-red-700: #8a1f17;
+  /* The brand red. 6.90:1 on warm white, 6.20:1 on cream — safe for text
+     and for white-on-red buttons alike. */
+  --color-red-600: #a8201a;
+  --color-red-700: #751712;
+  --color-red-800: #5c110d;
   --color-red-50: #fbeae8;
 
-  --color-amber-400: #e79a3f;
-  --color-amber-500: #dd7e1f;
-  --color-amber-600: #c06a18;
-  --color-amber-50: #fdf1e1;
-  /* amber-500/600 fail WCAG AA (4.5:1) as small text on light backgrounds
-     (2.9:1 / 3.9:1). Use this for amber TEXT on cream/white/paper — it
-     holds 5:1+ there. amber-500/600 stay fine for backgrounds, borders,
-     and text on dark backgrounds (ink), where contrast is already ample. */
-  --color-amber-text: #8f4c0f;
+  /* Subtle gold. Dark backgrounds only for text (7.75:1 on ink); on light
+     backgrounds restrict it to hairlines and rules. */
+  --color-gold: #c5a45a;
+  --color-gold-soft: #d8bc80;
 
   /* --- Text ---------------------------------------------------------- */
-  --color-text: #241c17;
-  --color-text-muted: #6b5d52;
-  --color-text-faint: #96897c;
-  --color-text-on-ink: #f5eee3;
-  --color-text-on-ink-muted: #c9bcae;
+  --color-text: #2a1d16;
+  --color-text-muted: #6a574a;
+  --color-text-faint: #7a6454;
+  --color-text-on-ink: #f3e7d7;
+  --color-text-on-ink-muted: #c3b2a0;
 
   /* --- Borders / surfaces --------------------------------------------- */
-  --color-border: #e7dccb;
-  --color-border-strong: #d8c9b1;
+  --color-border: #e4d5c0;
+  --color-border-strong: #d3c0a6;
   --color-surface: var(--color-paper);
   --color-surface-alt: var(--color-cream);
 
   /* --- Semantic -------------------------------------------------------- */
   --color-success: #3f7a4d;
   --color-success-bg: #eaf3ec;
-  --color-warning: var(--color-amber-500);
-  --color-warning-bg: var(--color-amber-50);
+  --color-warning: #8a5a12;
+  --color-warning-bg: #f7edda;
   --color-danger: var(--color-red-600);
   --color-danger-bg: var(--color-red-50);
   --color-info: #2f6690;
@@ -95,14 +99,14 @@
   --radius-xl: 22px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(28, 23, 18, 0.08);
-  --shadow-md: 0 6px 16px rgba(28, 23, 18, 0.1);
-  --shadow-lg: 0 16px 40px rgba(28, 23, 18, 0.18);
+  --shadow-sm: 0 1px 2px rgba(27, 18, 14, 0.08);
+  --shadow-md: 0 6px 16px rgba(27, 18, 14, 0.1);
+  --shadow-lg: 0 16px 40px rgba(27, 18, 14, 0.18);
 
   --container-max: 1180px;
 
   --transition-fast: 140ms ease;
   --transition-base: 220ms ease;
 
-  --focus-ring: 0 0 0 3px rgba(221, 126, 31, 0.45);
+  --focus-ring: 0 0 0 3px rgba(168, 32, 26, 0.35);
 }

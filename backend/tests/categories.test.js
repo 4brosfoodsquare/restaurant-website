@@ -43,13 +43,13 @@ after(() => {
 test('public endpoint returns only active categories, signature ones included', async () => {
   const res = await request(app).get('/api/categories');
   assert.equal(res.status, 200);
-  assert.ok(res.body.data.length >= 6);
+  // The focused menu is the brand: the seed ships exactly these three, all
+  // marked signature. A fourth appearing here means demo data crept back in.
   const slugs = res.body.data.map((c) => c.slug);
   assert.ok(slugs.includes('biriyani'));
   assert.ok(slugs.includes('kabab'));
   assert.ok(slugs.includes('chilli-chicken'));
-  const biriyani = res.body.data.find((c) => c.slug === 'biriyani');
-  assert.equal(biriyani.isSignature, true);
+  assert.ok(res.body.data.every((c) => c.isSignature));
 });
 
 test('admin category list requires authentication', async () => {

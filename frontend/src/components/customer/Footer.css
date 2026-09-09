@@ -15,8 +15,8 @@
 
 .site-footer__brand p { margin-top: var(--space-4); max-width: 40ch; font-size: var(--text-sm); }
 .site-footer__social { display: flex; gap: var(--space-4); margin-top: var(--space-4); }
-.site-footer__social a { font-weight: 600; font-size: var(--text-sm); color: var(--color-amber-400); }
-.site-footer__social a:hover { color: var(--color-amber-500); }
+.site-footer__social a { font-weight: 600; font-size: var(--text-sm); color: var(--color-gold); }
+.site-footer__social a:hover { color: var(--color-red-600); }
 
 .site-footer h3 {
   color: var(--color-text-on-ink);

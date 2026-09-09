@@ -1,8 +1,8 @@
 # 4 Bros Food Square
 
 A production-ready restaurant website, online ordering system, and restaurant
-admin dashboard — built for a specialist Indian non-vegetarian kitchen
-(biriyani, kabab, chilli chicken).
+admin dashboard — built for a homemade kitchen with a deliberately short
+menu: biriyani, kabab and chilli chicken, cooked with homemade masalas.
 
 This is a **completely independent project** — it shares no code, branding,
 configuration, or business logic with any other project.

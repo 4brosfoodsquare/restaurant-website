@@ -20,7 +20,7 @@
   flex-direction: column;
   gap: var(--space-1);
 }
-a.dashboard-stats__card:hover { border-color: var(--color-amber-500); }
+a.dashboard-stats__card:hover { border-color: var(--color-red-600); }
 .dashboard-stats__card--alert { border-color: var(--color-red-600); background: var(--color-red-50); }
 .dashboard-stats__value { font-size: var(--text-2xl); font-weight: 700; font-family: var(--font-display); }
 .dashboard-stats__label { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 600; }

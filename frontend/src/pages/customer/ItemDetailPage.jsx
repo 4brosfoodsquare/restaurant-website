@@ -6,6 +6,7 @@ import { useCart } from '../../context/CartContext.jsx';
 import { formatMoney } from '../../lib/money.js';
 import { DIET_LABELS, SPICE_LABELS } from '../../lib/dietLabels.js';
 import { LoadingState, ErrorState } from '../../components/shared/StateViews.jsx';
+import { FoodImage } from '../../components/customer/FoodImage.jsx';
 import './ItemDetailPage.css';
 
 export default function ItemDetailPage() {
@@ -50,13 +51,7 @@ export default function ItemDetailPage() {
 
       <div className="item-detail__grid">
         <div className="item-detail__media">
-          {item.imageUrl ? (
-            <img src={item.imageUrl} alt="" />
-          ) : (
-            <div className="item-detail__media-placeholder" aria-hidden="true">
-              🍽️
-            </div>
-          )}
+          <FoodImage src={item.imageUrl} label={item.name} eager />
           {unavailable && <span className="item-detail__sold-out">Currently Unavailable</span>}
         </div>
 

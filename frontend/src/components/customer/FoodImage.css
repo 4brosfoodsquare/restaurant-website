@@ -1,0 +1,45 @@
+.food-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.food-image--placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  background:
+    radial-gradient(120% 100% at 50% 0%, var(--color-cream) 0%, var(--color-cream-deep) 100%);
+  text-align: center;
+}
+
+.food-image__rule {
+  width: 2.5rem;
+  height: 1px;
+  background: var(--color-gold);
+  opacity: 0.7;
+}
+
+.food-image__label {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* On the dark hero the cream plate would glare, so it inverts to sit in the
+   section rather than punch a hole in it. */
+.food-image--on-ink.food-image--placeholder {
+  background: radial-gradient(120% 100% at 50% 0%, var(--color-ink-soft) 0%, var(--color-ink) 100%);
+}
+.food-image--on-ink .food-image__label { color: var(--color-text-on-ink-muted); }
+
+/* Compact frames render no lettering at all (see FoodImage.jsx), so this
+   only needs to drop the padding the labelled variant reserves for it. */
+.food-image--compact.food-image--placeholder { padding: 0; gap: 0; }
