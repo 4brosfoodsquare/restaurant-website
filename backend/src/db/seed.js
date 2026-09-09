@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { getDb } from './index.js';
 import { runMigrations } from './migrate.js';
 import config from '../config/env.js';
@@ -152,7 +153,8 @@ async function seed() {
   console.log(`[seed] admin login → ${config.seed.adminEmail} / (see backend/.env SEED_ADMIN_PASSWORD)`);
 }
 
-const isDirectRun = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
+// See the note in migrate.js: a hand-built `file://` string never matches on Windows.
+const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isDirectRun) {
   seed()
     .catch((error) => {

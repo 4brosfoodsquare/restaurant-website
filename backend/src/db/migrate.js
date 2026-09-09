@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { getDb } from './index.js';
 
 const migrationsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
@@ -49,7 +49,10 @@ export function runMigrations({ silent = false } = {}) {
   return executed;
 }
 
-const isDirectRun = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
+// pathToFileURL, not a hand-built `file://` string: on Windows a resolved path
+// is `C:\dir\file.js` while import.meta.url is `file:///C:/dir/file.js`, so the
+// naive comparison never matched and running this script did nothing at all.
+const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isDirectRun) {
   try {
     runMigrations();
