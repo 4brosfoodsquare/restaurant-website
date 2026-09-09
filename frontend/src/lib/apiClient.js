@@ -93,14 +93,30 @@ async function request(path, { method = 'GET', body, headers, isRetry = false, .
 
   if (res.status === 204) return null;
 
-  const payload = await res.json().catch(() => null);
+  let malformed = false;
+  const payload = await res.json().catch(() => {
+    malformed = true;
+    return null;
+  });
 
   if (!res.ok) {
     const err = payload?.error;
     throw new ApiError(res.status, err?.code ?? 'UNKNOWN_ERROR', err?.message ?? 'Something went wrong. Please try again.', err?.details);
   }
 
-  return payload?.data;
+  // A 2xx whose body isn't the `{ data }` envelope is a broken response, not a
+  // successful empty one — and it must throw rather than resolve as undefined.
+  // The case that bites in production: a static host answering /api/* with its
+  // SPA fallback returns 200 text/html, so res.ok is true and the parse fails
+  // quietly. Returning undefined there made every caller believe it had loaded,
+  // and pages reading .length or .map on the result crashed the whole app into
+  // the error boundary — losing the header and footer with it — instead of
+  // showing their own "couldn't load, retry" state.
+  if (malformed || !payload || typeof payload !== 'object' || !('data' in payload)) {
+    throw new ApiError(res.status, 'INVALID_RESPONSE', 'The server sent an unexpected response. Please try again shortly.');
+  }
+
+  return payload.data;
 }
 
 export const api = {

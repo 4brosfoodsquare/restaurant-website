@@ -114,6 +114,28 @@ describe('api request wrapper', () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
+  it('rejects a 200 whose body is not the { data } envelope, instead of resolving undefined', async () => {
+    const { api } = await freshApiClient();
+    // Exactly what a static host does when it has no backend: the SPA
+    // fallback answers /api/* with 200 text/html. res.ok is true and the JSON
+    // parse fails, so this used to resolve as undefined and every caller
+    // believed it had loaded — crashing pages that read .length or .map on it.
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: () => Promise.reject(new SyntaxError('Unexpected token <')),
+    });
+
+    await expect(api.get('/api/menu')).rejects.toMatchObject({ code: 'INVALID_RESPONSE' });
+  });
+
+  it('still resolves when the envelope carries a null data value', async () => {
+    const { api } = await freshApiClient();
+    global.fetch = vi.fn().mockResolvedValue(jsonResponse(200, { data: null }));
+
+    await expect(api.get('/api/settings')).resolves.toBeNull();
+  });
+
   it('sends FormData bodies without a Content-Type header (browser sets the multipart boundary)', async () => {
     const { api } = await freshApiClient();
     const fetchMock = vi.fn().mockResolvedValue(jsonResponse(201, { data: { url: '/uploads/x.png' } }));
