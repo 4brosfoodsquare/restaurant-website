@@ -26,14 +26,16 @@
 
   /* Red splits by job, because one red cannot do both well:
        --color-red-brand is the vivid signage red, for FILLS — the hero, the
-         primary button, the order band. Warm white on it is 4.75:1, fine for
-         the large type and button labels that sit there.
+         primary button, the order band. Warm white reads 5.07:1 on it and
+         cream 4.55:1, so both the headline and the body copy that sit there
+         clear AA with headroom.
        --color-red-600 is the deeper red for TEXT and borders on light
-         backgrounds (6.20:1 on cream). The vivid red only manages 4.26:1
-         there, which fails AA for the small bold links that use it.
-     A brighter red still (#ED1C24 and up) drops white text below 4.5:1, so
-     this is as vivid as the palette goes without hurting legibility. */
-  --color-red-brand: #d62828;
+         backgrounds (6.20:1 on cream). The vivid red manages only 4.55:1
+         there, too thin for the small bold links that use it.
+     Anything brighter fails: at #E31E25 warm white is already 4.45:1, and a
+     full pillar-box red drops it to 4.16:1. This is the most vivid the
+     palette goes without costing legibility. */
+  --color-red-brand: #d02127;
   --color-red-600: #a8201a;
   --color-red-700: #751712;
   --color-red-800: #5c110d;

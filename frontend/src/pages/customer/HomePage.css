@@ -42,7 +42,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(214, 40, 40, 0.88), rgba(117, 23, 18, 0.92));
+  /* rgb of --color-red-brand and --color-red-700; a gradient can't take the
+     custom properties directly without a colour-mix, and this wash needs to
+     stay opaque enough to hold the headline's contrast over any photo. */
+  background: linear-gradient(rgba(208, 33, 39, 0.88), rgba(117, 23, 18, 0.92));
 }
 .hero__inner { position: relative; max-width: 46ch; }
 @media (min-width: 900px) {
