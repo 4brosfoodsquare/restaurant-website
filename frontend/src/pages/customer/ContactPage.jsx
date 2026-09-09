@@ -23,48 +23,50 @@ export default function ContactPage() {
       </header>
 
       <div className="contact-page__grid">
-        <div className="card contact-page__card">
-          <h2>Get in Touch</h2>
-          <ul className="contact-page__list">
-            {settings?.phone && (
-              <li>
-                <span>Phone</span>
-                <a href={`tel:${settings.phone.replace(/\s+/g, '')}`}>{settings.phone}</a>
-              </li>
-            )}
-            {settings?.email && (
-              <li>
-                <span>Email</span>
-                <a href={`mailto:${settings.email}`}>{settings.email}</a>
-              </li>
-            )}
-            {settings?.addressLine1 && (
-              <li>
-                <span>Address</span>
-                <span>
-                  {settings.addressLine1}
-                  {settings.addressLine2 ? `, ${settings.addressLine2}` : ''}
-                  {settings.addressPostcode ? ` — ${settings.addressPostcode}` : ''}
-                </span>
-              </li>
-            )}
-          </ul>
+        <div className="card card--brand contact-page__card">
+          <h2 className="card__header">Get in Touch</h2>
+          <div className="card__body">
+            <ul className="contact-page__list">
+              {settings?.phone && (
+                <li>
+                  <span>Phone</span>
+                  <a href={`tel:${settings.phone.replace(/\s+/g, '')}`}>{settings.phone}</a>
+                </li>
+              )}
+              {settings?.email && (
+                <li>
+                  <span>Email</span>
+                  <a href={`mailto:${settings.email}`}>{settings.email}</a>
+                </li>
+              )}
+              {settings?.addressLine1 && (
+                <li>
+                  <span>Address</span>
+                  <span>
+                    {settings.addressLine1}
+                    {settings.addressLine2 ? `, ${settings.addressLine2}` : ''}
+                    {settings.addressPostcode ? ` — ${settings.addressPostcode}` : ''}
+                  </span>
+                </li>
+              )}
+            </ul>
 
-          {mapQuery && (
-            <a
-              className="btn btn-outline btn-sm contact-page__map-link"
-              href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Open in Maps
-            </a>
-          )}
+            {mapQuery && (
+              <a
+                className="btn btn-outline btn-sm contact-page__map-link"
+                href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open in Maps
+              </a>
+            )}
+          </div>
         </div>
 
-        <div className="card contact-page__card">
-          <h2>Opening Hours</h2>
-          <ul className="contact-page__hours">
+        <div className="card card--brand contact-page__card">
+          <h2 className="card__header">Opening Hours</h2>
+          <ul className="contact-page__hours card__body">
             {settings?.hours &&
               Object.entries(DAY_LABELS).map(([key, label]) => (
                 <li key={key}>

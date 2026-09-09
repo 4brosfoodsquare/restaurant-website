@@ -5,48 +5,20 @@
   object-fit: cover;
 }
 
+/* The branded stand-in shown wherever a dish has no photo yet. Deep red
+   rather than the vivid brand fill: these wells sit directly above cream
+   content, where the darker tone reads as a photo area instead of a flat
+   swatch. */
 .food-image--placeholder {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-4);
-  padding: var(--space-8);
-  background:
-    radial-gradient(120% 100% at 50% 0%, var(--color-cream) 0%, var(--color-cream-deep) 100%);
-  text-align: center;
+  background: var(--color-red-600);
 }
 
 .food-image__rule {
   width: 2.5rem;
   height: 1px;
-  background: var(--color-gold);
-  opacity: 0.7;
-}
-
-.food-image__label {
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-/* Brand-red plate, used where a missing photo would otherwise leave a large
-   pale block — the homepage signature cards. Deep red rather than the vivid
-   brand fill: this sits directly above a cream content area, and the deeper
-   tone reads as a deliberate photo well instead of a flat swatch. Cream, not
-   gold, for the lettering and rules — gold is 3.06:1 here, cream 6.20:1. */
-.food-image--on-brand.food-image--placeholder {
-  background: var(--color-red-600);
-}
-.food-image--on-brand .food-image__label { color: var(--color-text-on-brand); }
-.food-image--on-brand .food-image__rule {
   background: var(--color-text-on-brand);
   opacity: 0.55;
 }
-
-/* Compact frames carry the rules but no lettering (see FoodImage.jsx), so
-   they need less breathing room than the labelled variant. */
-.food-image--compact.food-image--placeholder { padding: var(--space-4); gap: var(--space-3); }

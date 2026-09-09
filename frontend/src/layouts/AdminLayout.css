@@ -53,6 +53,16 @@
 .admin-sidebar__brand-subtitle { display: block; font-size: var(--text-xs); color: var(--color-text-on-brand-muted); }
 
 .admin-sidebar nav ul { display: flex; flex-direction: column; gap: var(--space-1); flex: 1; }
+.admin-sidebar__icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .admin-sidebar nav a {
   display: flex;
   align-items: center;
@@ -105,5 +115,8 @@
 .dashboard-table th, .dashboard-table td { text-align: left; padding: var(--space-3) var(--space-4); white-space: nowrap; }
 .dashboard-table th { color: var(--color-text-muted); font-weight: 600; border-bottom: 1px solid var(--color-border); }
 .dashboard-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--color-border); }
+/* A value the owner still has to supply — muted and italic so it reads as an
+   empty field rather than as data. */
+.admin-table__unset { color: var(--color-text-muted); font-style: italic; }
 .dashboard-table a { font-weight: 700; color: var(--color-red-600); }
 .dashboard-table__capitalize { text-transform: capitalize; }

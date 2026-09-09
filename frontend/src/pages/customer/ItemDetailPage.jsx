@@ -52,7 +52,7 @@ export default function ItemDetailPage() {
 
       <div className="item-detail__grid">
         <div className="item-detail__media">
-          <FoodImage src={item.imageUrl} label={item.name} eager />
+          <FoodImage src={item.imageUrl} eager />
           {soldOut && <span className="item-detail__sold-out">Currently Unavailable</span>}
         </div>
 

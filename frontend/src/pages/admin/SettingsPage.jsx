@@ -74,107 +74,117 @@ export default function SettingsPage() {
 
       <form onSubmit={handleSubmit} className="settings-form">
         <fieldset disabled={!canEdit || saving}>
-          <section className="settings-form__section">
-            <h2>Basics</h2>
-            <div className="field">
-              <label htmlFor="restaurantName">Restaurant Name</label>
-              <input id="restaurantName" className="input" value={form.restaurantName} onChange={(e) => update('restaurantName', e.target.value)} />
-            </div>
-            <div className="field">
-              <label htmlFor="tagline">Tagline</label>
-              <input id="tagline" className="input" value={form.tagline} onChange={(e) => update('tagline', e.target.value)} />
-            </div>
-            <div className="field">
-              <label htmlFor="description">Description</label>
-              <textarea id="description" className="textarea" value={form.description} onChange={(e) => update('description', e.target.value)} />
-            </div>
-          </section>
-
-          <section className="settings-form__section">
-            <h2>Contact &amp; Address</h2>
-            <div className="settings-form__row">
+          <section className="settings-form__section card card--brand">
+            <h2 className="card__header">Basics</h2>
+            <div className="settings-form__section-body card__body">
               <div className="field">
-                <label htmlFor="phone">Phone</label>
-                <input id="phone" className="input" value={form.phone} onChange={(e) => update('phone', e.target.value)} />
+                <label htmlFor="restaurantName">Restaurant Name</label>
+                <input id="restaurantName" className="input" value={form.restaurantName} onChange={(e) => update('restaurantName', e.target.value)} />
               </div>
               <div className="field">
-                <label htmlFor="email">Email</label>
-                <input id="email" className="input" type="email" value={form.email} onChange={(e) => update('email', e.target.value)} />
-              </div>
-            </div>
-            <div className="field">
-              <label htmlFor="addressLine1">Address Line 1</label>
-              <input id="addressLine1" className="input" value={form.addressLine1} onChange={(e) => update('addressLine1', e.target.value)} />
-            </div>
-            <div className="settings-form__row">
-              <div className="field">
-                <label htmlFor="addressLine2">Address Line 2</label>
-                <input id="addressLine2" className="input" value={form.addressLine2} onChange={(e) => update('addressLine2', e.target.value)} />
+                <label htmlFor="tagline">Tagline</label>
+                <input id="tagline" className="input" value={form.tagline} onChange={(e) => update('tagline', e.target.value)} />
               </div>
               <div className="field">
-                <label htmlFor="addressPostcode">Postcode</label>
-                <input id="addressPostcode" className="input" value={form.addressPostcode} onChange={(e) => update('addressPostcode', e.target.value)} />
+                <label htmlFor="description">Description</label>
+                <textarea id="description" className="textarea" value={form.description} onChange={(e) => update('description', e.target.value)} />
               </div>
             </div>
           </section>
 
-          <section className="settings-form__section">
-            <h2>Opening Hours</h2>
-            <div className="settings-form__hours">
-              {Object.entries(DAY_LABELS).map(([key, label]) => (
-                <div className="field" key={key}>
-                  <label htmlFor={`hours-${key}`}>{label}</label>
-                  <input
-                    id={`hours-${key}`}
-                    className="input"
-                    placeholder="11:00-22:30 or closed"
-                    value={form.hours?.[key] ?? ''}
-                    onChange={(e) => updateHours(key, e.target.value)}
-                  />
+          <section className="settings-form__section card card--brand">
+            <h2 className="card__header">Contact &amp; Address</h2>
+            <div className="settings-form__section-body card__body">
+              <div className="settings-form__row">
+                <div className="field">
+                  <label htmlFor="phone">Phone</label>
+                  <input id="phone" className="input" value={form.phone} onChange={(e) => update('phone', e.target.value)} />
                 </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="settings-form__section">
-            <h2>Ordering</h2>
-            <div className="settings-form__checkboxes">
-              <label>
-                <input type="checkbox" checked={form.orderTypesEnabled.includes('pickup')} onChange={() => toggleOrderType('pickup')} />
-                Pickup enabled
-              </label>
-              <label>
-                <input type="checkbox" checked={form.orderTypesEnabled.includes('delivery')} onChange={() => toggleOrderType('delivery')} />
-                Delivery enabled
-              </label>
-            </div>
-            <div className="settings-form__row settings-form__row--three">
-              <div className="field">
-                <label htmlFor="deliveryFeeMinor">Delivery Fee (paise)</label>
-                <input id="deliveryFeeMinor" className="input" type="number" min="0" value={form.deliveryFeeMinor} onChange={(e) => update('deliveryFeeMinor', e.target.value)} />
+                <div className="field">
+                  <label htmlFor="email">Email</label>
+                  <input id="email" className="input" type="email" value={form.email} onChange={(e) => update('email', e.target.value)} />
+                </div>
               </div>
               <div className="field">
-                <label htmlFor="taxRateBps">Tax Rate (basis points)</label>
-                <input id="taxRateBps" className="input" type="number" min="0" max="10000" value={form.taxRateBps} onChange={(e) => update('taxRateBps', e.target.value)} />
-                <span className="field-hint">500 = 5%</span>
+                <label htmlFor="addressLine1">Address Line 1</label>
+                <input id="addressLine1" className="input" value={form.addressLine1} onChange={(e) => update('addressLine1', e.target.value)} />
               </div>
-              <div className="field">
-                <label htmlFor="minOrderMinor">Minimum Order (paise)</label>
-                <input id="minOrderMinor" className="input" type="number" min="0" value={form.minOrderMinor} onChange={(e) => update('minOrderMinor', e.target.value)} />
+              <div className="settings-form__row">
+                <div className="field">
+                  <label htmlFor="addressLine2">Address Line 2</label>
+                  <input id="addressLine2" className="input" value={form.addressLine2} onChange={(e) => update('addressLine2', e.target.value)} />
+                </div>
+                <div className="field">
+                  <label htmlFor="addressPostcode">Postcode</label>
+                  <input id="addressPostcode" className="input" value={form.addressPostcode} onChange={(e) => update('addressPostcode', e.target.value)} />
+                </div>
               </div>
             </div>
           </section>
 
-          <section className="settings-form__section">
-            <h2>Social Links</h2>
-            <div className="settings-form__row">
-              <div className="field">
-                <label htmlFor="socialInstagram">Instagram URL</label>
-                <input id="socialInstagram" className="input" value={form.socialInstagram} onChange={(e) => update('socialInstagram', e.target.value)} />
+          <section className="settings-form__section card card--brand">
+            <h2 className="card__header">Opening Hours</h2>
+            <div className="settings-form__section-body card__body">
+              <div className="settings-form__hours">
+                {Object.entries(DAY_LABELS).map(([key, label]) => (
+                  <div className="field" key={key}>
+                    <label htmlFor={`hours-${key}`}>{label}</label>
+                    <input
+                      id={`hours-${key}`}
+                      className="input"
+                      placeholder="11:00-22:30 or closed"
+                      value={form.hours?.[key] ?? ''}
+                      onChange={(e) => updateHours(key, e.target.value)}
+                    />
+                  </div>
+                ))}
               </div>
-              <div className="field">
-                <label htmlFor="socialFacebook">Facebook URL</label>
-                <input id="socialFacebook" className="input" value={form.socialFacebook} onChange={(e) => update('socialFacebook', e.target.value)} />
+            </div>
+          </section>
+
+          <section className="settings-form__section card card--brand">
+            <h2 className="card__header">Ordering</h2>
+            <div className="settings-form__section-body card__body">
+              <div className="settings-form__checkboxes">
+                <label>
+                  <input type="checkbox" checked={form.orderTypesEnabled.includes('pickup')} onChange={() => toggleOrderType('pickup')} />
+                  Pickup enabled
+                </label>
+                <label>
+                  <input type="checkbox" checked={form.orderTypesEnabled.includes('delivery')} onChange={() => toggleOrderType('delivery')} />
+                  Delivery enabled
+                </label>
+              </div>
+              <div className="settings-form__row settings-form__row--three">
+                <div className="field">
+                  <label htmlFor="deliveryFeeMinor">Delivery Fee (paise)</label>
+                  <input id="deliveryFeeMinor" className="input" type="number" min="0" value={form.deliveryFeeMinor} onChange={(e) => update('deliveryFeeMinor', e.target.value)} />
+                </div>
+                <div className="field">
+                  <label htmlFor="taxRateBps">Tax Rate (basis points)</label>
+                  <input id="taxRateBps" className="input" type="number" min="0" max="10000" value={form.taxRateBps} onChange={(e) => update('taxRateBps', e.target.value)} />
+                  <span className="field-hint">500 = 5%</span>
+                </div>
+                <div className="field">
+                  <label htmlFor="minOrderMinor">Minimum Order (paise)</label>
+                  <input id="minOrderMinor" className="input" type="number" min="0" value={form.minOrderMinor} onChange={(e) => update('minOrderMinor', e.target.value)} />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="settings-form__section card card--brand">
+            <h2 className="card__header">Social Links</h2>
+            <div className="settings-form__section-body card__body">
+              <div className="settings-form__row">
+                <div className="field">
+                  <label htmlFor="socialInstagram">Instagram URL</label>
+                  <input id="socialInstagram" className="input" value={form.socialInstagram} onChange={(e) => update('socialInstagram', e.target.value)} />
+                </div>
+                <div className="field">
+                  <label htmlFor="socialFacebook">Facebook URL</label>
+                  <input id="socialFacebook" className="input" value={form.socialFacebook} onChange={(e) => update('socialFacebook', e.target.value)} />
+                </div>
               </div>
             </div>
           </section>

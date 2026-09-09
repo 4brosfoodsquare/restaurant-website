@@ -21,9 +21,7 @@ export function FoodCard({ item }) {
           discernible name for screen readers, and with it present too we'd
           just be a second identical stop before that one. */}
       <Link to={`/menu/${item.slug}`} className="food-card__media" aria-hidden="true" tabIndex={-1}>
-        {/* No label on the plate here: the dish title sits directly beneath
-            it, so printing the name inside the image would just repeat it. */}
-        <FoodImage src={item.imageUrl} compact />
+        <FoodImage src={item.imageUrl} />
         {soldOut && <span className="food-card__sold-out">Sold Out</span>}
         {!soldOut && item.isPopular && <span className="badge badge-amber food-card__ribbon">Popular</span>}
       </Link>

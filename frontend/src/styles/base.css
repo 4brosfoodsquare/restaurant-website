@@ -12,6 +12,9 @@ body {
 }
 img, svg, video { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; color: inherit; }
+/* Checkboxes and radios otherwise paint in the browser's own blue, which is
+   the one colour on the page that belongs to no part of the brand. */
+input[type="checkbox"], input[type="radio"], progress { accent-color: var(--color-red-brand); }
 a { color: inherit; text-decoration: none; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 h1, h2, h3, h4, h5, h6 { margin: 0; font-family: var(--font-display); font-weight: 600; line-height: 1.15; }
@@ -38,6 +41,18 @@ p { margin: 0; }
 .skip-link:focus {
   left: 0;
 }
+
+/* Customer shell ------------------------------------------------------
+   Pins the footer to the bottom of the viewport on pages whose content is
+   shorter than the screen — an empty cart, the 404, the contact page. Without
+   this the footer stops where the content stops and leaves a band of bare
+   cream beneath it, which reads as a broken page rather than a short one. */
+.customer-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.customer-shell > main { flex: 1 0 auto; }
 
 /* Layout helpers ------------------------------------------------------ */
 .container {

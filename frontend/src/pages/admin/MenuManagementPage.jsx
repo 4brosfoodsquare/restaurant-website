@@ -3,7 +3,7 @@ import { usePageTitle } from '../../hooks/usePageTitle.js';
 import { useApiQuery } from '../../hooks/useApiQuery.js';
 import { api, ApiError } from '../../lib/apiClient.js';
 import { useAuth } from '../../context/AuthContext.jsx';
-import { formatMoney } from '../../lib/money.js';
+import { formatMoney, isPriced } from '../../lib/money.js';
 import { LoadingState, ErrorState } from '../../components/shared/StateViews.jsx';
 import { Modal } from '../../components/admin/Modal.jsx';
 import './MenuManagementPage.css';
@@ -176,7 +176,14 @@ export default function MenuManagementPage() {
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>{item.categoryName}</td>
-                  <td>{formatMoney(item.priceMinor)}</td>
+                  {/* The storefront says "Price on request" for an unpriced dish;
+                      here the owner needs the opposite emphasis — "₹0" looks like a
+                      decision already made, "Not set" looks like the job it is. */}
+                  <td>
+                    {isPriced(item.priceMinor)
+                      ? formatMoney(item.priceMinor)
+                      : <span className="admin-table__unset">Not set</span>}
+                  </td>
                   <td>
                     <button type="button" className={`badge ${item.isAvailable ? 'badge-success' : 'badge-neutral'} menu-mgmt-page__toggle`} onClick={() => toggleAvailability(item)}>
                       {item.isAvailable ? 'Available' : 'Sold Out'}

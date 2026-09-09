@@ -3,18 +3,18 @@
 .settings-page__readonly-note { color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-1); }
 
 .settings-form fieldset { border: none; padding: 0; margin: 0; }
+/* Surface, border, radius, the red header and its padding all come from
+   .card--brand — the same treatment as the order-detail cards, so the admin
+   reads as one interface rather than two. */
 .settings-form__section {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
   margin-bottom: var(--space-5);
+  max-width: 720px;
+}
+.settings-form__section-body {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  max-width: 720px;
 }
-.settings-form__section h2 { font-size: var(--text-lg); }
 .settings-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
 .settings-form__row--three { grid-template-columns: repeat(3, 1fr); }
 .settings-form__hours { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3); }
